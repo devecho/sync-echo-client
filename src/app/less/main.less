@@ -1,0 +1,21 @@
+@import "reset";
+@import "variables";
+@import "mixins";
+@import "basics";
+@import "icons";
+@import "forms";
+
+#main {
+	position: fixed;
+	top: @pageHeaderHeight;
+	bottom: @contextBarHeight;
+	left: 0;
+	right: 0;
+	.transition(left, @transitionSpeedSlow);
+}
+
+@media (min-width: @mediaSmallWidth) {
+	#main {
+		left: @roomNavigationWidth;
+	}
+}

@@ -1,0 +1,96 @@
+@import "variables";
+
+.fittingFont(@size) {
+	font-size: @size;
+	line-height: @size;
+}
+
+.transition(@prop, @speed: @transitionSpeed) {
+	-webkit-transition: @prop ease-in-out @speed;
+	-moz-transition: @prop ease-in-out @speed;
+	-ms-transition: @prop ease-in-out @speed;
+	-o-transition: @prop ease-in-out @speed;
+}
+
+.transitionAll (@value) {
+	-webkit-transition: @value;
+	-moz-transition: @value;
+	-ms-transition: @value;
+	-o-transition: @value;
+	transition: @value;
+}
+
+.singleLine() {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.btnSize(@height, @width: auto) {
+	font-size: @height * 0.5;
+	line-height: @height;
+	height: @height;
+	width: @width;
+}
+
+.noResize() {
+	resize: none;
+	-moz-resize: none;
+	-webkit-resize: none;
+	-ms-resize: none;
+}
+
+.fill() {
+	width: 100%;
+	height: 100%;
+}
+
+.noListStyle() {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.clickableList() {
+	list-style: none;
+	padding: 0;
+
+	> li {
+		border-bottom: 1pt solid @greyLightest;
+		cursor: pointer;
+
+		&:hover {
+			background: @greyLightest;
+			.transition(background)
+		}
+	}
+}
+
+.gridList() {
+	.noListStyle();
+
+	display: table;
+	table-layout: fixed;
+	width: 100%;
+
+	li {
+		display: table-row;
+
+		> * {
+			display: table-cell;
+			vertical-align: middle;
+		}
+	}
+}
+
+.metroBox(@bgColor) {
+	height: 100%;
+	border: 1pt solid @greyLight;
+	border-top: none;
+
+	h1 {
+		padding: @paddingSmall @paddingNormal;
+		background: @bgColor;
+		color: #FFF;
+	}
+}

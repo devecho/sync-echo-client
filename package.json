@@ -1,0 +1,36 @@
+{
+  "name": "syncecho-client",
+  "version": "0.0.1",
+  "directories": {
+    "doc": "doc"
+  },
+  "dependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-contrib-less": "~0.7.0",
+    "grunt-contrib-requirejs": "~0.4.1",
+    "grunt-contrib-copy": "~0.4.1",
+    "grunt-contrib-uglify": "~0.2.2",
+    "grunt-contrib-watch": "~0.5.1"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-contrib-copy": "~0.4.1",
+    "grunt-contrib-less": "~0.7.0",
+    "grunt-contrib-watch": "~0.5.2",
+    "grunt-contrib-uglify": "~0.2.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/devecho/syncecho-client.git"
+  },
+  "keywords": [
+    "devecho"
+  ],
+  "author": "Leo Selig",
+  "gitHead": "3558d77264525d959a7d45471add7618224fdbaa"
+}
