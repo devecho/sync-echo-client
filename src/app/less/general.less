@@ -1,0 +1,26 @@
+@import "variables";
+@import "mixins";
+
+#main {
+
+	> nav {
+		.tableLayout();
+
+		> a {
+			text-align: center;
+			font-size: 16pt;
+			line-height: 2em;
+			background: @areaColorLight;
+			color: @fontColor;
+
+			&:hover, &:focus {
+				background: @accentColorLight;
+			}
+
+			&.active {
+				color: #FFF;
+				background: @accentColor;
+			}
+		}
+	}
+}

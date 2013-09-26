@@ -4,18 +4,12 @@
 @import "basics";
 @import "icons";
 @import "forms";
+@import "header";
+@import "general";
+@import "links";
+@import "providers";
 
 #main {
-	position: fixed;
-	top: @pageHeaderHeight;
-	bottom: @contextBarHeight;
-	left: 0;
-	right: 0;
-	.transition(left, @transitionSpeedSlow);
-}
-
-@media (min-width: @mediaSmallWidth) {
-	#main {
-		left: @roomNavigationWidth;
-	}
+	min-width: 800px;
+	margin: auto;
 }

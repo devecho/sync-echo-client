@@ -1,6 +1,6 @@
 requirejs.config({
 	baseUrl: '',
-	
+
 	shim: {
 		'lib/handlebars': {
 			exports: 'Handlebars'
@@ -21,7 +21,7 @@ requirejs.config({
 			deps: ['lib/jquery']
 		}
 	},
-	
+
 	paths: {
 		'backbone': 'plugins/backbone-extension',
 		'txt': 'plugins/requirejs.text'
@@ -43,7 +43,14 @@ define('app', [], function() {
 	};
 });
 
-requirejs(['backbone', 'routers/Main', 'lib/bootstrap'], function(Backbone, MainRouter) {
-	var mainRouter = new MainRouter();
-	Backbone.history.start();
+requirejs(['localization', 'features/Popup'], function(localization, Popup) {
+	requirejs(['backbone', 'routers/Main'], function(Backbone, MainRouter) {
+		var mainRouter = new MainRouter();
+		Backbone.history.start();
+
+		// TEMP
+		$(document).on('click', '.providers li', function(e) {
+			$(e.currentTarget).toggleClass('checked');
+		});
+	});
 });

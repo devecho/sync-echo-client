@@ -1,108 +1,249 @@
 define([
+	'config',
 	'lib/backbone',
 	'lib/underscore',
 	'core/Path',
 	'core/URLPattern'
-], function(Backbone, _, Path, URLPattern) {
-	
+], function(config, Backbone, _, Path, URLPattern) {
+
+
+	_.extend(Backbone.Router.prototype, new function() {
+
+		/**
+		 * @property currentViews
+		 * @type {Object}
+		 * @default {}
+		 * @private
+		 * @final
+		 */
+		var currentViews = {};
+
+		return {
+
+			/**
+			 * @method view
+			 * @param selector {string}
+			 * @param view {Backbone.View}
+			 * @chainable
+			 */
+			view: function(selector, view) {
+				if(currentViews[selector]) {
+					currentViews[selector].destroy();
+				}
+				currentViews[selector] = view;
+				view.appendTo(selector);
+				return this;
+			}
+		};
+	});
+
 	_.extend(Backbone.View.prototype, Backbone.Events, new function() {
 		return {
-			_parentView: null,
-			_subViews: null,
-			
+
+			/**
+			 * @for Backbone.View
+			 * @property parentView
+			 * @type {Backbone.View}
+			 * @default null
+			 * @protected
+			 */
+			parentView: null,
+
+			/**
+			 * @for Backbone.View
+			 * @property subViews
+			 * @type {Object}
+			 * @default null
+			 * @protected
+			 */
+			subViews: null,
+
+			/**
+			 * @for Backbone.View
+			 * @property _renderedOnce
+			 * @type {boolean}
+			 * @private
+			 */
+			_renderedOnce: false,
+
+			/**
+			 * @for Backbone.View
+			 * @method initialize
+			 * @param options {Object}
+			 * @protected
+			 */
+			initialize: function(options) {
+				if(this.parentView !== null) {
+					this.listenTo('append', this.parentView, function() {
+						this.trigger('append');
+					}, this);
+				}
+			},
+
+			/**
+			 * @for Backbone.View
+			 * @method subView
+			 * @param selector {string}
+			 * @param view {Backbone.View}
+			 * @param [replace=false] {boolean}
+			 * @chainable
+			 * @public
+			 */
 			subView: function(selector, view, replace) {
-				if(this._subViews === null) {
-					this._subViews = {};
+				if(this.subViews === null) {
+					this.subViews = {};
 				}
 				if(typeof view === 'undefined') {
-					return this._subViews[selector] || [];
+					return this.subViews[selector] || [];
 				}
 
-				if(!this._subViews[selector]) {
-					this._subViews[selector] = [];
+				if(!this.subViews[selector]) {
+					this.subViews[selector] = [];
 				}
 				if(replace) {
-					this.closeSubViewSet(selector);
+					this.destroySubViewSet(selector);
 				}
-				this._subViews[selector].push(view);
-				view._parentView = this;
+				this.subViews[selector].push(view);
+				view.parentView = this;
+
+				if(this.renderedOnce()) {
+					view.render();
+				}
 				if(this.appended()) {
 					view.appendTo(this.$el.find(selector));
 				}
 				return this;
 			},
-			
-			closeSubViewSet: function(selector) {
-				while(this._subViews[selector].length > 0) {
-					this._subViews[selector][0].close();
-					delete this._subViews[selector].shift()._parentView;
+
+			/**
+			 * @for Backbone.View
+			 * @method destroySubViewSet
+			 * @param selector {string}
+			 * @chainable
+			 * @public
+			 */
+			destroySubViewSet: function(selector) {
+				while(this.subViews[selector].length > 0) {
+					this.subViews[selector][0].destroy();
+					delete this.subViews[selector].shift().parentView;
 				}
 				return this;
-			},
-			
-			closeSubViews: function() {
-				for(var selector in this._subViews) {
-					this.closeSubViewSet(selector);
-				}
-				return this;
-			},
-			
-			close: function() {
-				this.closeSubViews();
-				this.stopListening();
-				this.unbind();
-				return this;
-			},
-			
-			render: function() {
-				this.renderSubViews();
-				return this;
-			},
-			
-			renderSubViews: function() {
-				for(var selector in this._subViews) {
-					for(var i = 0; i < this._subViews[selector].length; i++) {
-						this.$el.find(selector).append(this._subViews[selector][i].render().el);
-					}
-				}
 			},
 
+			/**
+			 * @for Backbone.View
+			 * @method destroySubViews
+			 * @chainable
+			 * @public
+			 */
+			destroySubViews: function() {
+				for(var selector in this.subViews) {
+					this.destroySubViewSet(selector);
+				}
+				return this;
+			},
+
+			/**
+			 * @for Backbone.View
+			 * @method destroy
+			 * @chainable
+			 * @public
+			 */
+			destroy: function() {
+				this.trigger('destroy');
+				this.destroySubViews();
+				this.stopListening();
+				this.unbind();
+				this.remove();
+				return this;
+			},
+
+			/**
+			 * @for Backbone.View
+			 * @method eachSubView
+			 * @param callback {Function}
+			 *      @param callback.view {Backbone.View}
+			 *      @param callback.selector {string}
+			 * @chainable
+			 * @public
+			 */
+			eachSubView: function(callback) {
+				for(var selector in this.subViews) {
+					for(var i = 0; j < this.subViews[selector].length; i++) {
+						callback(this.subViews[selector][i], selector);
+					}
+				}
+				return this;
+			},
+
+			/**
+			 * @for Backbone.View
+			 * @method render
+			 * @chainable
+			 * @public
+			 */
+			render: function() {
+				this.delegateEvents();
+				this.renderSubViews();
+				this._renderedOnce = true;
+				return this;
+			},
+
+			/**
+			 * @for Backbone.View
+			 * @method renderedOnce
+			 * @return {boolean}
+			 * @public
+			 */
+			renderedOnce: function() {
+				return this._renderedOnce;
+			},
+
+			/**
+			 * @for Backbone.View
+			 * @method renderSubViews
+			 * @chainable
+			 * @public
+			 */
+			renderSubViews: function() {
+				for(var selector in this.subViews) {
+					for(var i = 0; i < this.subViews[selector].length; i++) {
+						this.subViews[selector][i].render().appendTo(
+							this.$el.find(selector));
+					}
+				}
+				return this;
+			},
+
+			/**
+			 * @for Backbone.View
+			 * @method appended
+			 * @return {boolean}
+			 * @public
+			 */
 			appended: function() {
 				return this.$el.closest('body').length > 0;
 			},
 
-			afterAppend: function() {
-
-			},
-			
+			/**
+			 * @for Backbone.View
+			 * @method appendTo
+			 * @param target {jQuery, HTMLElement, HTMLElement[], string}
+			 * @chainable
+			 * @public
+			 */
 			appendTo: function(target) {
 				$(target).append(this.el);
-				this._notifyAppended();
-			},
-			
-			_notifyAppended: function() {
-				this.afterAppend();
-				for(var selector in this._subViews) {
-					for(var i = 0; i < this._subViews[selector].length; i++) {
-						this._subViews[selector][i]._notifyAppended();
-					}
+				if(this.appended()) {
+					this.trigger('append');
 				}
+				return this;
 			}
 		};
 	});
-	
-	_.extend(Backbone.View, new function() {
-		return {
-		};
-	});
-
-	Backbone.ajax = function(options) {
-		return options.together.request().perform(options);
-	}
 
 	var syncWrapper = function(originalSync) {
 		return function(method, model, options) {
-			options.together = this.togetherInstance();
 
 			var success = options.success || function() {
 			};
@@ -127,7 +268,40 @@ define([
 		}
 	};
 
-	_.extend(Backbone, {currentViews: []});
+	_.extend(Backbone.Model, {
+
+		/**
+		 * @for Backbone.Model
+		 * @method latchCallbacks
+		 * @param original {{success: {Function}, error: {Function}, always: {Function}}}
+		 * @param latched {{success: {Function}, error: {Function}, always: {Function}}}
+		 * @returns {{success: {Function}, error: {Function}, always: {Function}}}
+		 * @public
+		 */
+		latchCallbacks: function(original, latched) {
+			var methods = ['success', 'error', 'always'];
+			var stored = {};
+			_.each(methods, function(m) {
+				stored[m] = original[m] || function() {
+				};
+				original[m] = latched[m];
+			});
+			return stored;
+		}
+	});
+
+	_.extend(Backbone.Model, {
+
+		/**
+		 * @for Backbone.Collection
+		 * @method latchCallbacks
+		 * @param original {{success: {Function}, error: {Function}, always: {Function}}}
+		 * @param latched {{success: {Function}, error: {Function}, always: {Function}}}
+		 * @returns {{success: {Function}, error: {Function}, always: {Function}}}
+		 * @public
+		 */
+		latchCallbacks: Backbone.Model.latchCallbacks
+	});
 
 	_.extend(Backbone.Collection.prototype, new function() {
 
@@ -143,20 +317,20 @@ define([
 
 			/**
 			 * @for Backbone.Collection
-			 * @property _urlPattern
+			 * @property urlPattern
 			 * @type {URLPattern}
 			 * @protected
 			 * @final
 			 */
-			_urlPattern: null,
+			urlPattern: null,
 
 			/**
 			 * @for Backbone.Collection
-			 * @property _urlParams
+			 * @property urlParams
 			 * @type {Object}
 			 * @protected
 			 */
-			_urlParams: null,
+			urlParams: null,
 
 			_prepareModel: function(attrs, options) {
 				if(attrs instanceof Backbone.Model) {
@@ -165,13 +339,11 @@ define([
 					}
 					return attrs;
 				}
-				options ||
-				(
-					options = {});
+				options = options || {};
 				options.collection = this;
 
 				// Generate the URL params to be passed to the model (models inherit their collection's URL params)
-				var modelParams = _.extend({}, this._urlParams, options.params);
+				var modelParams = _.extend({}, this.urlParams, options.params);
 
 				/*
 				 * If just one model is specified for this collection simply instanciate it
@@ -202,9 +374,10 @@ define([
 			 * @protected
 			 */
 			initialize: function(attributes, options) {
-				this._urlPattern = new URLPattern(this.urlRoot);
-				this._urlParams =
-				_.extend(options.params || {}, this.collection ? this.collection._urlParams : {});
+				options = options || {};
+				this.urlPattern = new URLPattern(this.urlRoot);
+				this.urlParams =
+				_.extend(options.params || {}, this.collection ? this.collection.urlParams : {});
 				for(var i in this.defaults) {
 					if((
 						   typeof this.defaults[i] === 'object') &&
@@ -222,63 +395,56 @@ define([
 			 * @public
 			 */
 			url: function() {
-				var path = new Path(this.togetherInstance().servicePath(),
-					this._urlPattern.generate(_.extend(this._urlParams, {id: this.id})));
+				var path = new Path(
+					config('service'),
+					this.urlPattern.generate(_.extend(this.urlParams, {id: this.id})));
 				return path.toString();
 			},
 
 			/**
-			 * @method eTag
-			 * @param callback {Function}
+			 * @method comparator
+			 * @param a {Backbone.Model}
+			 * @param b {Backbone.Model}
+			 * @returns {number}
 			 * @public
-			 * @chainable
 			 */
-			eTag: function(callback) {
-				var this_ = this;
-				this.togetherInstance().request().perform({
-					type:     'HEAD',
-					url: _.isFunction(this.url) ? this.url() : this.url,
-					queue:    'background',
-					dataType: 'text'
-				})
-					.done(function(data, status, xhr) {
-						this_._lastETag = xhr.getResponseHeader('ETag');
-						callback(xhr.getResponseHeader('ETag'));
-					})
-					.fail(function() {
-						callback(null);
-					});
-				return this;
+			comparator: function(a, b) {
+				return 0;
 			}
 		}
 	});
-
-	_.extend(Backbone.Events,
-		(function() {
-			var originalOn = Backbone.Events.on;
-			var newOn = function(name, callback, context) {
-				originalOn.apply(this, arguments);
-				var this_ = this;
-				return function() {
-					this_.off(name, callback, context);
-				};
-			}
-
-			return {
-				on:   newOn,
-				bind: newOn
-			}
-		})());
-
-	// Extend Model/Collection prototype with changed Backbone.Events properties
-	_.extend(Backbone.Model.prototype, Backbone.Events);
-	_.extend(Backbone.Collection.prototype, Backbone.Events);
-
 
 	_.extend(Backbone.Model.prototype, new function() {
 
 		return {
 
+			/**
+			 * @property readOnly
+			 * @type {Object}
+			 * @protected
+			 */
+			readOnly: {},
+
+			/**
+			 * @for Backbone.Model
+			 * @method initialize
+			 * @param attributes {Object}
+			 * @param options {Object}
+			 */
+			initialize: function(attributes, options) {
+				options = options || {};
+				this.urlPattern = new URLPattern(this.urlRoot);
+				this.urlParams =
+				_.extend(options.params || {}, this.collection ? this.collection.urlParams : {});
+			},
+
+			/**
+			 * @for Backbone.Model
+			 * @method toJSON
+			 * @param options {Object}
+			 * @returns {Object}
+			 * @public
+			 */
 			toJSON: function(options) {
 				if(typeof options === 'undefined') {
 					return _.clone(this.attributes);
@@ -286,6 +452,12 @@ define([
 				return this.writableAttributes();
 			},
 
+			/**
+			 * @for Backbone.Model
+			 * @method writableAttributes
+			 * @returns {Object}
+			 * @public
+			 */
 			writableAttributes: function() {
 				var attrs = _.clone(this.attributes);
 				for(var i in attrs) {
@@ -296,34 +468,35 @@ define([
 				return attrs;
 			},
 
+
 			/**
 			 * @for Backbone.Model
-			 * @property _urlPattern
+			 * @method richAttributes
+			 * @returns {Object}
+			 * @public
+			 */
+			richAttributes: function() {
+				return _.extend(this.toJSON(), {
+					isNew: this.isNew()
+				});
+			},
+
+			/**
+			 * @for Backbone.Model
+			 * @property urlPattern
 			 * @type {URLPattern}
 			 * @protected
 			 * @final
 			 */
-			_urlPattern: null,
+			urlPattern: null,
 
 			/**
 			 * @for Backbone.Model
-			 * @property _urlParams
+			 * @property urlParams
 			 * @type {Object}
 			 * @protected
 			 */
-			_urlParams: null,
-
-			/**
-			 * @for Backbone.Model
-			 * @method initialize
-			 * @param attributes {Object}
-			 * @param options {Object}
-			 */
-			initialize: function(attributes, options) {
-				this._urlPattern = new URLPattern(this.urlRoot);
-				this._urlParams =
-				_.extend(options.params || {}, this.collection ? this.collection._urlParams : {});
-			},
+			urlParams: null,
 
 			/**
 			 * @for Backbone.Model
@@ -331,12 +504,13 @@ define([
 			 * @return {String}
 			 */
 			url: function() {
-				var path = new Path(this.togetherInstance().servicePath(),
-					this._urlPattern.generate(_.extend(this._urlParams, {id: this.id})));
+				var path = new Path(
+					config('service'),
+					this.urlPattern.generate(_.extend(this.urlParams, {id: this.id})));
 				return path.toString();
 			}
 		}
 	});
-	
+
 	return Backbone;
 });

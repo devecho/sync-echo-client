@@ -1,0 +1,27 @@
+<div class="icon">
+	<img>
+</div>
+
+<div class="cell">
+	<h1>{{provider.name}}</h1>
+
+	<div class="view">
+		<a class="edit btn positive"><i class="icon-link"></i>
+			{{#if link.isNew}}
+				{{local 'action.link'}}
+			{{else}}
+				{{local 'action.edit'}}
+			{{/if}}
+		</a>
+	</div>
+
+	<form>
+		<div class="buttons">
+			<div></div>
+			<div class="btnBar">
+				<a class="save btn positive">Save</a>
+				<a class="cancel btn">Cancel</a>
+			</div>
+		</div>
+	</form>
+</div>

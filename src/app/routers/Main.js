@@ -1,9 +1,12 @@
 /**
  * @module routers/Main
  * @requires backbone
- * @requires views/main/Site
+ * @requires views/general/Container
  */
-define(['backbone', 'views/main/Site'], function(Backbone, SiteView) {
+define([
+	'backbone',
+    'views/general/Container'
+], function(Backbone, ContainerView) {
 
 	/**
 	 * @namespace routers
@@ -14,12 +17,21 @@ define(['backbone', 'views/main/Site'], function(Backbone, SiteView) {
 	var MainRouter = Backbone.Router.extend({
 
 		/**
+		 * @property _container
+		 * @type {views.general.Container}
+		 * @default null
+		 * @private
+		 */
+		_container: null,
+
+		/**
 		 * @property routes
 		 * @type {Object}
 		 * @public
 		 */
 		routes: {
-			'': 'routeDefault'
+			'': 'routeDefault',
+			'links': 'links'
 		},
 
 		/**
@@ -28,8 +40,8 @@ define(['backbone', 'views/main/Site'], function(Backbone, SiteView) {
 		 * @public
 		 */
 		initialize: function() {
-			this._siteView = new SiteView();
-			this._siteView.render().appendTo('body');
+			this._container = new ContainerView().render();
+			this._container.appendTo('body');
 			return this;
 		},
 
@@ -39,8 +51,20 @@ define(['backbone', 'views/main/Site'], function(Backbone, SiteView) {
 		 * @public
 		 */
 		routeDefault: function() {
-			this.navigate('');
+			this.links();
 			return this;
+		},
+
+		/**
+		 * @method links
+		 * @chainable
+		 * @public
+		 */
+		links: function() {
+			var self = this;
+			this.before(function() {
+				this._container.links();
+			});
 		},
 
 		/**

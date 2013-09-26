@@ -1,119 +1,86 @@
 body, textarea {
-  font-family: 'Open Sans', sans-serif;
-  font-weight: normal;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: normal;
 }
 
 h1, h2, h3, h4, h5 {
-  font-weight: normal;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin: 0;
+	font-weight: normal;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	margin: 0;
 }
 
 h1 {
-  font-size: 1.3em;
+	font-size: 1.3em;
 }
 
 h2 {
-  font-size: 1.2em;
+	font-size: 1.2em;
 }
 
 h3 {
-  font-size: 1.15em;
+	font-size: 1.15em;
 }
 
 h4 {
-  font-size: 1.1em;
+	font-size: 1.1em;
 }
 
 h5 {
-  font-size: 1.05em;
+	font-size: 1.05em;
 }
 
 /* Links/Buttons */
 
 a {
-  text-decoration: none;
-  color: @linkColor;
-  cursor: pointer;
-
-  &:hover, &:focus {
-	color: @linkColorHighlighted;
-  }
-
-  &.btn {
-	display: inline-block;
-	padding: 0 @paddingNormal;
-	background: @grey;
-	color: #FFF;
-	.btnSize(20pt);
+	text-decoration: none;
+	color: @linkColor;
+	cursor: pointer;
 
 	&:hover, &:focus {
-	  background: lighten(@grey, 0.5 * @colorHighlighting);
+		color: @linkColorLight;
 	}
-
-	&:active {
-	  background: darken(@grey, 0.5 * @colorHighlighting);
-	}
-
-	&.positive {
-	  background: @metroBlue;
-
-	  &:hover, &:focus {
-		background: lighten(@metroBlue, 0.5 * @colorHighlighting);
-	  }
-
-	  &:active {
-		background: darken(@metroBlue, 0.5 * @colorHighlighting);
-	  }
-	}
-  }
 }
 
 div.btnBar {
-  display: inline-block;
-  .btnSize(1em);
-  font-size: 20pt;
+	display: inline-block;
+	.btnSize(1em);
+	font-size: 20pt;
 
-  > a.btn {
-	vertical-align: top;
-	margin-left: @paddingSmall;
-
-	&:first-child {
-	  margin-left: 0;
+	> a.btn {
+		vertical-align: top;
 	}
-  }
 }
 
 /* Utilities */
 
 div.clr, br.clr {
-  clear: both;
+	clear: both;
 }
 
 .noResize {
-  .noResize();
+	.noResize();
 }
 
 ul {
-  &.no-style {
-	.noListStyle();
-  }
+	&.no-style {
+		.noListStyle();
+	}
 
-  &.clickable {
-	.clickableList();
-  }
+	&.clickable {
+		.clickableList();
+	}
 }
 
 ul.grid {
-  .gridList();
+	.gridList();
 }
 
 ul.horizontal {
-  .noListStyle();
+	.noListStyle();
 
-  > li {
-	float: left;
-  }
+	> li {
+		float: left;
+	}
 }

@@ -1,5 +1,18 @@
 @import "variables";
 
+.areaLink() {
+	background: @areaColorLight;
+	cursor: pointer;
+
+	&:hover, &:focus {
+		background: lighten(@areaColorLight, 5%);
+	}
+
+	&:active {
+		background: @areaColorLight;
+	}
+}
+
 .fittingFont(@size) {
 	font-size: @size;
 	line-height: @size;
@@ -46,9 +59,14 @@
 }
 
 .noListStyle() {
+	display: block;
 	list-style: none;
 	margin: 0;
 	padding: 0;
+
+	li {
+		display: block;
+	}
 }
 
 .clickableList() {
@@ -56,11 +74,11 @@
 	padding: 0;
 
 	> li {
-		border-bottom: 1pt solid @greyLightest;
+		border-bottom: 1pt solid @areaColorLight;
 		cursor: pointer;
 
 		&:hover {
-			background: @greyLightest;
+			background: @areaColorLight;
 			.transition(background)
 		}
 	}
@@ -83,14 +101,13 @@
 	}
 }
 
-.metroBox(@bgColor) {
-	height: 100%;
-	border: 1pt solid @greyLight;
-	border-top: none;
+.tableLayout() {
+	display: table;
+	table-layout: fixed;
+	.fill();
 
-	h1 {
-		padding: @paddingSmall @paddingNormal;
-		background: @bgColor;
-		color: #FFF;
+	> * {
+		display: table-cell;
+		vertical-align: top;
 	}
 }

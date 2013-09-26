@@ -1,6 +1,75 @@
+@import "variables";
+@import "mixins";
+
 textarea {
-  margin: 0;
-  padding: @paddingSmall;
-  border: 1pt solid @grey;
-  outline: none;
+	margin: 0;
+	padding: @paddingSmall;
+	border: 1pt solid @areaColorLight;
+	outline: none;
+}
+
+a.btn {
+	display: inline-block;
+	padding: 0 @paddingSmall;
+	background: @areaColor;
+	color: #FFF;
+	.btnSize(20pt);
+
+	&:hover, &:focus {
+		background: @areaColorLight;
+		color: @fontColor;
+	}
+
+	&:active {
+		color: #FFF;
+		background: @areaColorDark;
+	}
+
+	&.positive {
+		background: @accentColor;
+
+		&:hover, &:focus {
+			color: #FFF;
+			background: @accentColorLight;
+		}
+
+		&:active {
+			background: @accentColorDark;
+		}
+	}
+
+	i:first-child {
+		margin-right: @paddingSmall;
+	}
+
+	> * {
+		vertical-align: middle;
+	}
+}
+
+form {
+	display: table;
+	.fill();
+
+	> div {
+		display: table-row;
+
+		> * {
+			display: table-cell;
+		}
+
+		> .input {
+			input {
+				width: 100%;
+				max-width: 200pt;
+			}
+		}
+
+		> label {
+			padding-right: @paddingSmall;
+			text-align: right;
+			width: 1px;
+			.singleLine();
+		}
+	}
 }

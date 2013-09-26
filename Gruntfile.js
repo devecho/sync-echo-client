@@ -4,6 +4,7 @@ module.exports = function(grunt) {
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 		out: 'out/',
+		test: 'src/test/app/build/',
 
 		clean: {
 			out: {
@@ -20,6 +21,12 @@ module.exports = function(grunt) {
 				cwd: 'src/app/',
 				src: '**',
 				dest: '<%= out %>dev',
+				expand: true
+			},
+			test: {
+				cwd: '<%= out %>dev/',
+				src: '**',
+				dest: '<%= test %>',
 				expand: true
 			}
 		},
@@ -46,6 +53,8 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-watch');
 
 	grunt.registerTask('dev', [ 'clean:out', 'copy:dev', 'less:dev', 'clean:less' ]);
+
+	grunt.registerTask('testDev', [ 'dev', 'copy:test' ]);
 
 	grunt.registerTask('default', [ 'dev' ]);
 };
