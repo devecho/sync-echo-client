@@ -7,19 +7,25 @@
 		text-align: center;
 		font-size: 16pt;
 		line-height: 40pt;
-		.areaLink();
+		border: 1pt solid @areaColorLight;
+
+		> a {
+			.areaLink();
+			display: block;
+			.fill();
+		}
 
 		ul.providers {
 			.noListStyle();
 			display: none;
+			.autoClear();
+			padding: @paddingNormal;
 
 			li {
+				.areaLink();
 				float: left;
-				width: 50%;
-
-				&:hover, &:focus {
-					background: @areaColorLight;
-				}
+				width: @oneThird;
+				.bgPadding(@paddingSmall);
 
 				.icon {
 					float: left;
@@ -32,8 +38,15 @@
 		}
 	}
 
-	&.showProviders > .new ul.providers {
-		display: block;
+	&.showProviders > .new {
+
+		> a {
+			//display: none;
+		}
+
+		ul.providers {
+			display: block;
+		}
 	}
 
 	> ul {
@@ -78,6 +91,33 @@
 				.view {
 					display: none;
 				}
+			}
+
+			a.edit {
+				float: left;
+				margin-right: @paddingSmall;
+			}
+
+			.deleteContainer {
+
+				a.deleteConfirm, a.deleteCancel {
+					display: none;
+				}
+			}
+
+			.deleteContainer.confirm {
+
+				a.delete {
+					display: none;
+				}
+
+				a.deleteConfirm, a.deleteCancel {
+					display: inline-block;
+				}
+			}
+
+			&.isNew .deleteContainer {
+				display: none;
 			}
 		}
 	}

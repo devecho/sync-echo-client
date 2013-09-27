@@ -8,6 +8,10 @@ define(['lib/handlebars'], function(Handlebars) {
 		'term.password': 'Password',
 		'term.url':      'URL',
 
+		'action.save': 'Save',
+		'action.cancel': 'Cancel',
+		'action.confirm': 'Confirm',
+		'action.delete': 'Delete',
 		'action.edit': 'Edit',
 		'action.link': 'Link',
 

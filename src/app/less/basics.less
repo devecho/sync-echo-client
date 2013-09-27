@@ -47,9 +47,18 @@ div.btnBar {
 	display: inline-block;
 	.btnSize(1em);
 	font-size: 20pt;
+	line-height: 1.5em;
+	height: 1.5em;
 
 	> a.btn {
+		display: block;
+		float: left;
+		border-left: 1pt solid #FFF;
 		vertical-align: top;
+
+		&:first-child {
+			border-left: none;
+		}
 	}
 }
 

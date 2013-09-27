@@ -18,7 +18,7 @@ define([
 
 	/**
 	 * @class views.links.Account
-	 * @extends views.basic.Item
+	 * @extends views.basic.ListItem
 	 * @constructor
 	 */
 	var View = ListItem.extend({
@@ -45,9 +45,11 @@ define([
 		 * @protected
 		 */
 		events: {
-			'click a.edit':   'edit',
-			'click a.save':   'save',
-			'click a.cancel': 'cancel'
+			'click a.edit':                   'edit',
+			'click a.save':                   'save',
+			'click a.cancel':                 'cancel',
+			'click a.delete, a.deleteCancel': 'toggleDelete',
+			'click a.deleteConfirm':          'delete'
 		},
 
 		/**
@@ -77,13 +79,17 @@ define([
 		render: function() {
 			ListItem.prototype.render.apply(this, arguments);
 			this.$el.html(template({
-				link: this.model.richAttributes(),
+				link:     this.model.richAttributes(),
 				provider: this._provider.richAttributes()
 			}));
 			var $buttons = this.$el.find('form > div.buttons');
 			var data = this._provider.get('auth').data;
 			for(var i = 0; i < data.length; i++) {
 				$buttons.before(this.renderInput(data[i]));
+			}
+			this.$el.toggleClass('isNew', this.model.isNew());
+			if(this.model.isNew()) {
+				this.edit();
 			}
 			return this;
 		},
@@ -99,7 +105,7 @@ define([
 
 		/**
 		 * @method edit
-		 * @param e {MouseEvent}
+		 * @param [e] {MouseEvent}
 		 * @protected
 		 */
 		edit: function(e) {
@@ -112,6 +118,10 @@ define([
 		 * @protected
 		 */
 		cancel: function(e) {
+			if(this.model.isNew()) {
+				this.model.destroy();
+				return;
+			}
 			this.$el.removeClass('editing');
 		},
 
@@ -132,15 +142,38 @@ define([
 		},
 
 		/**
+		 * @method toggleDelete
+		 * @param e {MouseEvent}
+		 * @public
+		 */
+		toggleDelete: function(e) {
+			this.$el.find('.deleteContainer').toggleClass('confirm');
+		},
+
+		/**
+		 * @method delete
+		 * @param e {MouseEvent}
+		 * @public
+		 */
+		delete: function(e) {
+			this.model.destroy();
+		},
+
+		/**
 		 * @method _authData
+		 * @return {Array}
 		 * @private
 		 */
 		_authData: function() {
 			var $inputs = $('form input');
 			var data = this._provider.get('auth').data;
-			var result = {};
+			var result = [];
 			for(var i = 0; i < data.length; i++) {
-				result[data[i].name] = $inputs.filter('[name=' + data[i].name + ']').val();
+				result.push({
+					type:  'field',
+					name:  data[i].name,
+					value: $inputs.filter('[name=' + data[i].name + ']').val()
+				});
 			}
 			return result;
 		}

@@ -112,6 +112,11 @@ define([
 				if(this.appended()) {
 					view.appendTo(this.$el.find(selector));
 				}
+
+				this.listenTo(view, 'destroy', function() {
+					this.removeSubView(view);
+				}, this);
+
 				return this;
 			},
 
@@ -160,17 +165,38 @@ define([
 
 			/**
 			 * @for Backbone.View
+			 * @method removeSubView
+			 * @param view {Backbone.View}
+			 * @chainable
+			 * @public
+			 */
+			removeSubView: function(view) {
+				var self = this;
+				this.eachSubView(function(curView, selector, index) {
+					if(curView === view) {
+						self.subViews[selector].splice(index, 1);
+						return false;
+					}
+				});
+				return this;
+			},
+
+			/**
+			 * @for Backbone.View
 			 * @method eachSubView
 			 * @param callback {Function}
 			 *      @param callback.view {Backbone.View}
 			 *      @param callback.selector {string}
+			 *      @param callback.index {number}
 			 * @chainable
 			 * @public
 			 */
 			eachSubView: function(callback) {
-				for(var selector in this.subViews) {
-					for(var i = 0; j < this.subViews[selector].length; i++) {
-						callback(this.subViews[selector][i], selector);
+				outer: for(var selector in this.subViews) {
+					for(var i = 0; i < this.subViews[selector].length; i++) {
+						if(callback(this.subViews[selector][i], selector, i) === false) {
+							break outer;
+						}
 					}
 				}
 				return this;

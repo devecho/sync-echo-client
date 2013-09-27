@@ -81,24 +81,78 @@ define([
 			var anchorHeight = $anchor.outerHeight();
 			$popup.addClass('visible');
 			var popupWidth = $popup.outerWidth();
-			var anchorHeight = $popup.outerHeight();
+			var popupHeight = $popup.outerHeight();
 			$popup.removeClass('visible');
 
+			var top, left;
 			switch(orientation) {
+			case 'top':
+				top = anchorOffset.top - popupHeight;
+				break;
 			case 'bottom':
-				$popup.css({
-					top: anchorOffset.top + anchorHeight
-				});
+				top = anchorOffset.top + anchorHeight;
+				break;
+			case 'left':
+				left = anchorOffset.left - popupWidth;
+				break;
+			case 'right':
+				left = anchorOffset.left + anchorWidth;
 				break;
 			}
 
 			switch(align) {
+			case 'top':
+				top = anchorOffset.top;
+				break;
+			case 'bottom':
+				top = anchorOffset.top + anchorHeight - popupHeight;
+				break;
+			case 'left':
+				left = anchorOffset.left;
+				break;
+			case 'right':
+				left = anchorOffset.left + anchorWidth - popupWidth;
+				break;
 			case 'hCenter':
-				$popup.css({
-					left: anchorOffset.left + (anchorWidth / 2) - (popupWidth / 2)
-				});
+				left = anchorOffset.left + (anchorWidth / 2) - (popupWidth / 2);
+				break;
+			case 'vCenter':
+				top = anchorOffset.top + (anchorHeight / 2) - (popupHeight / 2);
 				break;
 			}
+
+			var windowHeight = $(window).height();
+			var windowWidth = $(window).width();
+			var popupRight = left + popupWidth;
+			var popupBottom = top + popupHeight;
+			var rightOverlap = windowWidth - popupRight;
+			var bottomOverlap = windowHeight - popupBottom;
+			var width = 'auto';
+			var height = 'auto';
+
+			if(rightOverlap > 0) {
+				if(rightOverlap > left) {
+					left = 0;
+					width = windowWidth;
+				}
+				else {
+					left -= rightOverlap;
+				}
+			}
+			if(bottomOverlap > 0) {
+				if(bottomOverlap > top) {
+					top = 0;
+					height = windowHeight;
+				}
+				else {
+					top -= bottomOverlap;
+				}
+			}
+
+			$popup.css({
+				top: top,
+				left: left
+			});
 		}
 	}
 
@@ -107,7 +161,7 @@ define([
 	$(document).on('click', function(e) {
 		var $target = $(e.target);
 		var $popup = $target.closest('.popup').add($target.filter('.popup'));
-		var $anchor = $target.closest('[data-popupSelector]').add($target.filter('[data-popupSelector]'));
+		var $anchor = $target.closest('[data-popup-selector]').add($target.filter('[data-popup-selector]'));
 		if($popup.length === 0) {
 			if($anchor.length > 0) {
 				getter($anchor).toggle();

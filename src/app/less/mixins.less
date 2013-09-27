@@ -13,6 +13,21 @@
 	}
 }
 
+.autoClear() {
+	&:before, &:after {
+		content: "";
+		display: table;
+	}
+
+	&:after {
+		clear: both;
+	}
+}
+
+.bgPadding(@size) {
+	border: @size solid transparent;
+}
+
 .fittingFont(@size) {
 	font-size: @size;
 	line-height: @size;

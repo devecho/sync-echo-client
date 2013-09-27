@@ -6,21 +6,37 @@
 	<h1>{{provider.name}}</h1>
 
 	<div class="view">
-		<a class="edit btn positive"><i class="icon-link"></i>
+		<a class="edit btn positive">
+			<i class="icon-link"></i>
 			{{#if link.isNew}}
 				{{local 'action.link'}}
 			{{else}}
 				{{local 'action.edit'}}
 			{{/if}}
 		</a>
+
+		<div class="deleteContainer btnBar">
+			<a class="delete btn">
+				<i class="icon-cross"></i>
+				{{local 'action.delete'}}
+			</a>
+			<a class="deleteConfirm btn">
+				<i class="icon-checkmark"></i>
+				{{local 'action.confirm'}}
+			</a>
+			<a class="deleteCancel btn">
+				<i class="icon-cross"></i>
+				{{local 'action.cancel'}}
+			</a>
+		</div>
 	</div>
 
 	<form>
 		<div class="buttons">
 			<div></div>
 			<div class="btnBar">
-				<a class="save btn positive">Save</a>
-				<a class="cancel btn">Cancel</a>
+				<a class="save btn positive">{{local 'action.save'}}</a>
+				<a class="cancel btn">{{local 'action.cancel'}}</a>
 			</div>
 		</div>
 	</form>
