@@ -130,7 +130,6 @@ define([
 			destroySubViewSet: function(selector) {
 				while(this.subViews[selector].length > 0) {
 					this.subViews[selector][0].destroy();
-					delete this.subViews[selector].shift().parentView;
 				}
 				return this;
 			},

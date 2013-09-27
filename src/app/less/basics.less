@@ -44,20 +44,27 @@ a {
 }
 
 div.btnBar {
-	display: inline-block;
-	.btnSize(1em);
-	font-size: 20pt;
-	line-height: 1.5em;
-	height: 1.5em;
+	display: table;
+	font-size: 12pt;
 
 	> a.btn {
-		display: block;
-		float: left;
+		display: table-cell;
+		font-size: 1em;
+		line-height: 2em;
 		border-left: 1pt solid #FFF;
 		vertical-align: top;
+		text-align: center;
 
 		&:first-child {
 			border-left: none;
+		}
+	}
+
+	&.equal {
+		table-layout: fixed;
+
+		> a.btn {
+			width: 1%;
 		}
 	}
 }
