@@ -30,8 +30,16 @@ define([
 		var visible = false;
 
 		/**
+		 * @property $defaultAnchor
+		 * @type {jQuery}
+		 * @default null
+		 * @private
+		 */
+		var $defaultAnchor = null;
+
+		/**
 		 * @method toggle
-		 * @param $anchor {jQuery}
+		 * @param [$anchor] {jQuery}
 		 * @public
 		 */
 		this.toggle = function($anchor) {
@@ -40,10 +48,11 @@ define([
 
 		/**
 		 * @method show
-		 * @param $anchor {jQuery}
+		 * @param [$anchor] {jQuery}
 		 * @public
 		 */
 		this.show = function($anchor) {
+			$anchor = $anchor || $defaultAnchor;
 			var orientation = $popup.data('popupOrientation');
 			var align = $popup.data('popupAlign');
 			if(align === 'center') {
@@ -55,18 +64,31 @@ define([
 				}
 			}
 			position(orientation, align, $anchor);
+			visible = true;
 			$popup.addClass('visible');
+			$popup.css('display', 'block');
 		}
 
 		/**
 		 * @method hide
-		 * @param $anchor {jQuery}
+		 * @param [$anchor] {jQuery}
 		 * @public
 		 */
 		this.hide = function($anchor) {
+			$anchor = $anchor || $defaultAnchor;
+			visible = false;
 			$popup.removeClass('visible');
+			$popup.css('display', 'none');
 		}
 
+		/**
+		 * @method defaultAnchor
+		 * @param $anchor {jQuery}
+		 * @public
+		 */
+		this.defaultAnchor = function($anchor) {
+			$defaultAnchor = $anchor;
+		}
 
 		/**
 		 * @method position
@@ -80,9 +102,11 @@ define([
 			var anchorWidth = $anchor.outerWidth();
 			var anchorHeight = $anchor.outerHeight();
 			$popup.addClass('visible');
+			$popup.css('display', 'block');
 			var popupWidth = $popup.outerWidth();
 			var popupHeight = $popup.outerHeight();
 			$popup.removeClass('visible');
+			$popup.css('display', 'none');
 
 			var top, left;
 			switch(orientation) {
@@ -125,8 +149,8 @@ define([
 			var windowWidth = $(window).width();
 			var popupRight = left + popupWidth;
 			var popupBottom = top + popupHeight;
-			var rightOverlap = windowWidth - popupRight;
-			var bottomOverlap = windowHeight - popupBottom;
+			var rightOverlap = popupRight - windowWidth;
+			var bottomOverlap = popupBottom - windowHeight;
 			var width = 'auto';
 			var height = 'auto';
 
@@ -164,7 +188,7 @@ define([
 		var $anchor = $target.closest('[data-popup-selector]').add($target.filter('[data-popup-selector]'));
 		if($popup.length === 0) {
 			if($anchor.length > 0) {
-				getter($anchor).toggle();
+				getter($anchor).toggle($anchor);
 			}
 			else {
 				if(curPopup !== null) {
@@ -172,17 +196,41 @@ define([
 				}
 			}
 		}
+		else {
+			getter($popup[0]).toggle();
+		}
 	});
 
 	/**
+	 * @property objAttachKey
+	 * @type {string}
+	 * @private
+	 * @static
+	 * @final
+	 */
+	var objAttachKey = '_popup';
+
+	/**
 	 * @method getter
-	 * @param anchorEl {jQuery, HTMLElement, string}
+	 * @param el {jQuery, HTMLElement, string}
 	 * @return {features.Popup}
 	 * @public
 	 */
-	var getter = function(anchorEl) {
-		var $anchor = $(anchorEl);
-
+	var getter = function(el) {
+		var $el = $(el);
+		if($el.is('.popup')) {
+			var popup = el;
+		}
+		else {
+			var popup = $el.parent().find($el.data('popupSelector'))[0];
+		}
+		if(!popup[objAttachKey]) {
+			popup[objAttachKey] = new Popup(popup);
+		}
+		if($el.is('[data-popup-selector')) {
+			popup[objAttachKey].defaultAnchor($el);
+		}
+		return popup[objAttachKey];
 	}
 
 	return getter;

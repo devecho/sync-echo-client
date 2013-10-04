@@ -427,6 +427,7 @@ define([
 			},
 
 			/**
+			 * @for Backbone.Collection
 			 * @method comparator
 			 * @param a {Backbone.Model}
 			 * @param b {Backbone.Model}
@@ -435,6 +436,18 @@ define([
 			 */
 			comparator: function(a, b) {
 				return 0;
+			},
+
+			/**
+			 * @for Backbone.Collection
+			 * @method richAttributes
+			 * @returns {Object}
+			 * @public
+			 */
+			richAttributes: function(options) {
+				return this.map(function(model) {
+					return model.richAttributes(options);
+				});
 			}
 		}
 	});

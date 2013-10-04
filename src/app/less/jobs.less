@@ -1,15 +1,143 @@
-@import "reset";
 @import "variables";
 @import "mixins";
-@import "basics";
-@import "icons";
-@import "forms";
-@import "header";
-@import "general";
-@import "links";
-@import "providers";
 
-#main {
-	min-width: 800px;
+.jobList {
+	> .bar {
+		display: table;
+		width: 100%;
+
+		> .input, > .new {
+			display: table-cell;
+			vertical-align: middle;
+		}
+
+		> .input {
+			padding-right: @paddingNormal;
+		}
+
+		> .new {
+			width: 1px;
+			white-space: nowrap;
+		}
+	}
+
+	> ul {
+		.noListStyle();
+
+		> li {
+			.autoClear();
+			float: left;
+			width: 50%;
+			padding-top: @paddingBig;
+
+			&:nth-child(2n) {
+				padding-left: @paddingNormal;
+			}
+
+			&:nth-child(2n + 1) {
+				padding-right: @paddingNormal;
+			}
+
+			> a {
+				display: block;
+				.areaLink();
+				padding: @paddingNormal;
+
+				> * {
+					.forceContent();
+				}
+			}
+		}
+	}
+}
+
+.editJob {
+	.noListStyle();
 	margin: auto;
+	max-width: @deviceWidthBig;
+
+	> form > li {
+		margin: @paddingBig 0;
+		padding: @paddingNormal;
+		background: @areaColorLight;
+
+		&.selection {
+			padding: 0;
+			background: none;
+			.autoClear();
+
+			> * {
+				float: left;
+				width: 50%;
+
+				&.source {
+					padding-right: @paddingNormal;
+				}
+
+				&.target {
+					padding-left: @paddingNormal;
+				}
+
+				&.source > div, &.target > div {
+					height: 100%;
+					padding: @paddingNormal;
+					background: @areaColorLight;
+
+					> .select {
+						.areaLink(#FFF, -5%);
+						display: inline-block;
+						padding: @paddingNormal;
+						background: #FFF;
+						min-width: 150pt;
+
+						.noneSelected {
+							font-style: italic;
+						}
+					}
+
+					> .popup {
+						background: #FFF;
+						border: 1pt solid @areaColor;
+						padding: @paddingSmall;
+
+						ul.links {
+							.noListStyle();
+							.autoClear();
+
+							li {
+								.areaLink(#FFF, -5%);
+								padding: @paddingSmall;
+								margin-top: 2pt;
+
+								&:first-child {
+									margin-top: 0;
+								}
+
+								.icon {
+									float: left;
+								}
+
+								strong {
+									font-size: 12pt;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		&.info {
+			clear: both;
+		}
+	}
+
+	> a.btn, a.btn.delete, .btnBar {
+		width: 150pt;
+	}
+
+	> a.submit {
+		float: left;
+		margin-right: @paddingSmall;
+	}
 }

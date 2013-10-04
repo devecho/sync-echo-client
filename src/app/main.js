@@ -5,26 +5,27 @@ requirejs.config({
 		'lib/handlebars': {
 			exports: 'Handlebars'
 		},
-		'lib/backbone': {
+		'lib/backbone':   {
 			exports: 'Backbone',
-			deps: ['lib/jquery', 'lib/underscore']
+			deps:    ['lib/jquery', 'lib/underscore']
 		},
-		'lib/jquery': {
+		'lib/jquery':     {
 			exports: 'jQuery',
-			deps: []
+			deps:    []
 		},
 		'lib/underscore': {
 			exports: '_',
-			deps: []
+			deps:    []
 		},
-		'lib/bootstrap': {
+		'lib/bootstrap':  {
 			deps: ['lib/jquery']
 		}
 	},
 
 	paths: {
 		'backbone': 'plugins/backbone-extension',
-		'txt': 'plugins/requirejs.text'
+		'txt':      'plugins/requirejs.text',
+		'tpl':      'core/tpl.require'
 	}
 });
 
@@ -43,9 +44,9 @@ define('app', [], function() {
 	};
 });
 
-requirejs(['localization', 'features/Popup'], function(localization, Popup) {
+requirejs(['app', 'localization', 'features/Popup'], function(app, localization, Popup) {
 	requirejs(['backbone', 'routers/Main'], function(Backbone, MainRouter) {
-		var mainRouter = new MainRouter();
+		app.router = new MainRouter();
 		Backbone.history.start();
 
 		// TEMP

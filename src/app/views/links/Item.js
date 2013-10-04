@@ -1,5 +1,5 @@
 /**
- * @module views/links/Account
+ * @module views/links/Item
  * @requires backbone
  * @requires lib/handlebars
  * @requires models/Provider
@@ -10,11 +10,9 @@ define([
 	'lib/handlebars',
 	'models/Provider',
 	'views/basic/ListItem',
-	'txt!tpl/links/item.html',
-	'txt!tpl/links/dataInput.html'
+	'tpl!links/item',
+	'tpl!links/dataInput'
 ], function(Backbone, Handlebars, Provider, ListItem, template, inputTemplate) {
-	template = Handlebars.compile(template);
-	inputTemplate = Handlebars.compile(inputTemplate);
 
 	/**
 	 * @class views.links.Account
@@ -62,7 +60,7 @@ define([
 			var self = this;
 			ListItem.prototype.initialize.apply(this, arguments);
 			this._provider = new Provider({
-				id: this.model.get('providerId')
+				id: this.model.get('provider')
 			});
 			this._provider.fetch({
 				success: function() {
@@ -79,13 +77,16 @@ define([
 		render: function() {
 			ListItem.prototype.render.apply(this, arguments);
 			this.$el.html(template({
-				link:     this.model.richAttributes(),
-				provider: this._provider.richAttributes()
+				link:       this.model.richAttributes(),
+				provider:   this._provider.richAttributes(),
+				identifier: this.model.identifier()
 			}));
 			var $buttons = this.$el.find('form > div.buttons');
 			var data = this._provider.get('auth').data;
 			for(var i = 0; i < data.length; i++) {
-				$buttons.before(this.renderInput(data[i]));
+				$buttons.before(this.renderInput(_.extend(data[i], {
+					value: this.model.value(data[i].name)
+				})));
 			}
 			this.$el.toggleClass('isNew', this.model.isNew());
 			if(this.model.isNew()) {

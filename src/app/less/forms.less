@@ -13,7 +13,8 @@ a.btn {
 	padding: 0 @paddingSmall;
 	background: @areaColor;
 	color: #FFF;
-	.btnSize(20pt);
+	font-size: 1em;
+	line-height: 2.5em;
 
 	&:hover, &:focus {
 		background: @areaColorLight;
@@ -45,6 +46,33 @@ a.btn {
 	> * {
 		vertical-align: middle;
 	}
+
+	&.center {
+		text-align: center;
+	}
+}
+
+div.btnBar {
+	display: table;
+
+	> a.btn {
+		display: table-cell;
+		border-left: 1pt solid #FFF;
+		vertical-align: top;
+		text-align: center;
+
+		&:first-child {
+			border-left: none;
+		}
+	}
+
+	&.equal {
+		table-layout: fixed;
+
+		> a.btn {
+			width: 1%;
+		}
+	}
 }
 
 form {
@@ -63,6 +91,7 @@ form {
 				width: 100%;
 				max-width: 200pt;
 			}
+			padding-bottom: @paddingSmall;
 		}
 
 		> .btnBar {
@@ -76,4 +105,37 @@ form {
 			.singleLine();
 		}
 	}
+}
+
+.input {
+	> input {
+		width: 100%;
+		font-size: 1em;
+		line-height: 1em;
+		padding: 0.75em;
+		height: 2.5em;
+		outline: none;
+	}
+}
+
+.btnBar.deleteContainer {
+
+	a.deleteConfirm, a.deleteCancel {
+		display: none;
+	}
+
+	&.confirm {
+
+		a.delete {
+			display: none;
+		}
+
+		a.deleteConfirm, a.deleteCancel {
+			display: inline-block;
+		}
+	}
+}
+
+.isNew .deleteContainer {
+	display: none;
 }

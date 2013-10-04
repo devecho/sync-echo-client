@@ -5,7 +5,7 @@
  */
 define([
 	'backbone',
-    'views/general/Container'
+	'views/general/Container'
 ], function(Backbone, ContainerView) {
 
 	/**
@@ -30,24 +30,24 @@ define([
 		 * @public
 		 */
 		routes: {
-			'': 'routeDefault',
-			'links': 'links'
+			'':          'routeDefault',
+			'links':     'links',
+			'jobs':      'jobs',
+			'jobs/edit': 'editJob',
+			'jobs/:id':  'job'
 		},
 
 		/**
 		 * @method initialize
-		 * @chainable
 		 * @public
 		 */
 		initialize: function() {
 			this._container = new ContainerView().render();
 			this._container.appendTo('body');
-			return this;
 		},
 
 		/**
 		 * @method routeDefault
-		 * @chainable
 		 * @public
 		 */
 		routeDefault: function() {
@@ -57,13 +57,42 @@ define([
 
 		/**
 		 * @method links
-		 * @chainable
 		 * @public
 		 */
 		links: function() {
-			var self = this;
 			this.before(function() {
 				this._container.links();
+			});
+		},
+
+		/**
+		 * @method jobs
+		 * @public
+		 */
+		jobs: function() {
+			this.before(function() {
+				this._container.jobs();
+			});
+		},
+
+		/**
+		 * @method editJob
+		 * @public
+		 */
+		editJob: function() {
+			this.before(function() {
+				this._container.editJob();
+			});
+		},
+
+		/**
+		 * @method job
+		 * @param id {string}
+		 * @public
+		 */
+		job: function(id) {
+			this.before(function() {
+				this._container.job(id);
 			});
 		},
 

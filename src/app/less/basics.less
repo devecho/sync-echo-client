@@ -8,27 +8,27 @@ h1, h2, h3, h4, h5 {
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	margin: 0;
+	margin: 0 0 @paddingSmall 0;
 }
 
 h1 {
-	font-size: 1.3em;
+	font-size: 1.6em;
 }
 
 h2 {
-	font-size: 1.2em;
+	font-size: 1.3em;
 }
 
 h3 {
-	font-size: 1.15em;
+	font-size: 1em;
 }
 
 h4 {
-	font-size: 1.1em;
+	font-size: 0.7em;
 }
 
 h5 {
-	font-size: 1.05em;
+	font-size: 0.4em;
 }
 
 /* Links/Buttons */
@@ -40,32 +40,6 @@ a {
 
 	&:hover, &:focus {
 		color: @linkColorLight;
-	}
-}
-
-div.btnBar {
-	display: table;
-	font-size: 12pt;
-
-	> a.btn {
-		display: table-cell;
-		font-size: 1em;
-		line-height: 2em;
-		border-left: 1pt solid #FFF;
-		vertical-align: top;
-		text-align: center;
-
-		&:first-child {
-			border-left: none;
-		}
-	}
-
-	&.equal {
-		table-layout: fixed;
-
-		> a.btn {
-			width: 1%;
-		}
 	}
 }
 

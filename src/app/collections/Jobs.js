@@ -1,43 +1,28 @@
 /**
- * @module collections/Links
+ * @module collections/Jobs
  * @requires backbone
- * @requires models/Link
+ * @requires models/Job
  */
 define([
 	'backbone',
-    'models/Link'
-], function(Backbone, Link) {
+    'models/Job'
+], function(Backbone, Job) {
 
 	/**
-	 * @class collections.Links
+	 * @namespace collections
+	 * @class Jobs
 	 * @type {Backbone.Collection}
 	 */
 	var Collection = Backbone.Collection.extend({
-		urlRoot: 'links/',
+		urlRoot: 'jobs/',
 
 		/**
 		 * @property model
 		 * @type {Function}
-		 * @default models.Link
+		 * @default models.Job
 		 * @protected
 		 */
-		model: Link,
-
-		/**
-		 * @method byProviderId
-		 * @param providerId {string}
-		 * @returns {models.Link}
-		 */
-		byProviderId: function(providerId) {
-			var match = null;
-			this.each(function(model) {
-				if(model.get('providerId') === providerId) {
-					match = model;
-					return false;
-				}
-			});
-			return match;
-		}
+		model: Job
 	});
 
 	return Collection;

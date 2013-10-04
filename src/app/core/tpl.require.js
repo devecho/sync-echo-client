@@ -1,12 +1,12 @@
 /**
- * @module core/hbs.require
+ * @module core/tpl.require
  * @requires lib/handlebars
  */
 define([
 	'lib/handlebars'
 ], {
 	load: function(name, req, onload, config) {
-		req([name], function(value) {
+		req(['txt!templates/' + name + '.hbs'], function(value) {
 			onload(Handlebars.compile(value));
 		});
 	}

@@ -1,15 +1,20 @@
 @import "variables";
 
-.areaLink() {
-	background: @areaColorLight;
+.areaLink(@color: @areaColorLight, @effectLighten: 5%) {
+	background: @color;
+	color: @fontColor;
 	cursor: pointer;
 
 	&:hover, &:focus {
-		background: lighten(@areaColorLight, 5%);
+		background: lighten(@color, @effectLighten);
 	}
 
 	&:active {
-		background: @areaColorLight;
+		background: @color;
+	}
+
+	&.active {
+		background: darken(@color, @effectLighten * 5);
 	}
 }
 
@@ -24,8 +29,19 @@
 	}
 }
 
-.bgPadding(@size) {
-	border: @size solid transparent;
+.forceContent() {
+	&:after {
+		content: "\00a0";
+	}
+}
+
+.bgPadding(@top, @right: @top, @bottom: @top, @left: @right) {
+	border-style: solid;
+	border-color: transparent;
+	border-top-width: @top;
+	border-right-width: @right;
+	border-bottom-width: @bottom;
+	border-left-width: @left;
 }
 
 .fittingFont(@size) {
@@ -74,7 +90,6 @@
 }
 
 .noListStyle() {
-	display: block;
 	list-style: none;
 	margin: 0;
 	padding: 0;

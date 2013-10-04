@@ -1,13 +1,43 @@
-<div class="bar">
-	<div class="input">
-		<input type="text" class="filter" placeholder="{{local 'action.filter'}}">
-	</div>
+<a href="#jobs">
+	<i class="icon-arrow-left bold"></i>
+	{{local 'jobs.details.back'}}
+</a>
 
-	<div class="new">
-		<a href="#jobs/edit" class="btn positive">
-			<i class="icon-plus"></i>
-            {{local 'jobs.action.create'}}
+{{#with job}}
+	<h1 class="name">{{name}}</h1>
+	<h2 class="description">{{description}}</h2>
+{{/with}}
+
+<aside class="actions">
+	<a class="btn edit">{{local 'actions.edit'}}</a>
+
+	<div class="deleteContainer btnBar">
+		<a class="delete btn">
+			<i class="icon-cross"></i>
+			{{local 'action.delete'}}
+		</a>
+		<a class="deleteConfirm btn">
+			<i class="icon-checkmark"></i>
+			{{local 'action.confirm'}}
+		</a>
+		<a class="deleteCancel btn">
+			<i class="icon-cross"></i>
+			{{local 'action.cancel'}}
 		</a>
 	</div>
-</div>
-<ul></ul>
+</aside>
+
+{{#if source}}
+	<label>{{local 'jobs.details.source.label'}}:</label>
+	<span class="source"><strong>
+		{{source.providerName}} ({{source.identifier}})
+	</strong></span>
+	<br>
+{{/if}}
+
+{{#if target}}
+	<label>{{local 'jobs.details.target.label'}}:</label>
+	<span class="target"><strong>
+		{{target.providerName}} ({{target.identifier}})
+	</strong></span>
+{{/if}}

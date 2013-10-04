@@ -14,14 +14,13 @@ define([
 	'views/basic/List',
 	'models/Link',
 	'collections/Providers',
-	'txt!tpl/links/list.html',
-	'txt!tpl/links/provider.html'
+	'tpl!links/list',
+	'tpl!links/provider'
 ], function(Backbone, Handlebars, LinkView, ListView, LinkModel, Providers, template, providerTempalte) {
-	template = Handlebars.compile(template);
-	providerTempalte = Handlebars.compile(providerTempalte);
 
 	/**
-	 * @class views.links.List
+	 * @namespace views.links
+	 * @class List
 	 * @constructor
 	 * @extends views.basic.List
 	 */
@@ -49,7 +48,6 @@ define([
 		 * @protected
 		 */
 		events: {
-			'click .new':            'toggleProvider',
 			'click ul.providers li': 'add'
 		},
 
@@ -74,22 +72,13 @@ define([
 		},
 
 		/**
-		 * @method toggleProvider
-		 * @param e {MouseEvent}
-		 * @public
-		 */
-		toggleProvider: function(e) {
-			this.$el.toggleClass('showProviders');
-		},
-
-		/**
 		 * @method add
 		 * @param e {MouseEvent}
 		 * @public
 		 */
 		add: function(e) {
 			this.collection.add(new LinkModel({
-				providerId: $(e.currentTarget).data('providerId')
+				provider: $(e.currentTarget).data('providerId')
 			}));
 		}
 	}, {

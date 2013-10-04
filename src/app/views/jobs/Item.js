@@ -1,5 +1,5 @@
 /**
- * @module views/links/Account
+ * @module views/jobs/Item
  * @requires backbone
  * @requires lib/handlebars
  * @requires models/Provider
@@ -8,14 +8,14 @@
 define([
 	'backbone',
 	'lib/handlebars',
-	'models/Provider',
+	'models/Job',
 	'views/basic/ListItem',
-	'tpl!links/item',
-	'tpl!links/dataInput'
-], function(Backbone, Handlebars, Provider, ListItem, template, inputTemplate) {
+	'tpl!jobs/item'
+], function(Backbone, Handlebars, Job, ListItem, template, inputTemplate) {
 
 	/**
-	 * @class views.links.Account
+	 * @namespace views.jobs
+	 * @class Item
 	 * @extends views.basic.ListItem
 	 * @constructor
 	 */
@@ -30,24 +30,11 @@ define([
 		tagName: 'li',
 
 		/**
-		 * @property _provider
-		 * @type {models.Provider}
-		 * @default null
-		 * @private
-		 */
-		_provider: null,
-
-		/**
 		 * @property events
 		 * @type {Object}
 		 * @protected
 		 */
 		events: {
-			'click a.edit':                   'edit',
-			'click a.save':                   'save',
-			'click a.cancel':                 'cancel',
-			'click a.delete, a.deleteCancel': 'toggleDelete',
-			'click a.deleteConfirm':          'delete'
 		},
 
 		/**
@@ -59,14 +46,6 @@ define([
 		initialize: function(options) {
 			var self = this;
 			ListItem.prototype.initialize.apply(this, arguments);
-			this._provider = new Provider({
-				id: this.model.get('provider')
-			});
-			this._provider.fetch({
-				success: function() {
-					self.render();
-				}
-			});
 		},
 
 		/**
@@ -76,54 +55,8 @@ define([
 		 */
 		render: function() {
 			ListItem.prototype.render.apply(this, arguments);
-			this.$el.html(template({
-				link:       this.model.richAttributes(),
-				provider:   this._provider.richAttributes(),
-				identifier: this.model.identifier()
-			}));
-			var $buttons = this.$el.find('form > div.buttons');
-			var data = this._provider.get('auth').data;
-			for(var i = 0; i < data.length; i++) {
-				$buttons.before(this.renderInput(_.extend(data[i], {
-					value: this.model.value(data[i].name)
-				})));
-			}
-			this.$el.toggleClass('isNew', this.model.isNew());
-			if(this.model.isNew()) {
-				this.edit();
-			}
+			this.$el.html(template(this.model.richAttributes()));
 			return this;
-		},
-
-		/**
-		 * @method renderInput
-		 * @param options {Object}
-		 * @protected
-		 */
-		renderInput: function(options) {
-			return inputTemplate(options);
-		},
-
-		/**
-		 * @method edit
-		 * @param [e] {MouseEvent}
-		 * @protected
-		 */
-		edit: function(e) {
-			this.$el.addClass('editing');
-		},
-
-		/**
-		 * @method cancel
-		 * @param e {MouseEvent}
-		 * @protected
-		 */
-		cancel: function(e) {
-			if(this.model.isNew()) {
-				this.model.destroy();
-				return;
-			}
-			this.$el.removeClass('editing');
 		},
 
 		/**
@@ -140,43 +73,6 @@ define([
 					self.$el.removeClass('editing');
 				}
 			});
-		},
-
-		/**
-		 * @method toggleDelete
-		 * @param e {MouseEvent}
-		 * @public
-		 */
-		toggleDelete: function(e) {
-			this.$el.find('.deleteContainer').toggleClass('confirm');
-		},
-
-		/**
-		 * @method delete
-		 * @param e {MouseEvent}
-		 * @public
-		 */
-		delete: function(e) {
-			this.model.destroy();
-		},
-
-		/**
-		 * @method _authData
-		 * @return {Array}
-		 * @private
-		 */
-		_authData: function() {
-			var $inputs = $('form input');
-			var data = this._provider.get('auth').data;
-			var result = [];
-			for(var i = 0; i < data.length; i++) {
-				result.push({
-					type:  'field',
-					name:  data[i].name,
-					value: $inputs.filter('[name=' + data[i].name + ']').val()
-				});
-			}
-			return result;
 		}
 	});
 

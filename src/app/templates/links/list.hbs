@@ -1,0 +1,20 @@
+<div class="bar">
+	<div class="input">
+		<input type="text" class="filter" placeholder="{{local 'action.filter'}}">
+	</div>
+
+	<div class="new">
+		<a class="btn positive" data-popup-selector=".popup">
+			<i class="icon-link"></i>
+            {{local 'links.create.label'}}
+		</a>
+
+        <div class="popup"
+             data-popup-orientation="bottom"
+             data-popup-align="right">
+            <span>{{local 'links.create.description'}}</span>
+	        <ul class="providers"></ul>
+        </div>
+	</div>
+</div>
+<ul></ul>

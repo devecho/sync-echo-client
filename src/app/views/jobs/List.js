@@ -1,22 +1,22 @@
 /**
- * @module views/links/List
+ * @module views/jobs/List
  * @requires backbone
  * @requires lib/handlebars
  * @requires views/links/Item
  * @requires views/basic/List
- * @requires models/Link
- * @requires collections/Providers
+ * @requires models/Job
+ * @requires collections/Jobs
  */
 define([
 	'backbone',
 	'lib/handlebars',
-	'views/links/Item',
+	'views/jobs/Item',
 	'views/basic/List',
-	'models/Link',
-	'collections/Providers',
-	'tpl!links/list',
-	'tpl!links/provider'
-], function(Backbone, Handlebars, LinkView, ListView, LinkModel, Providers, template, providerTempalte) {
+	'models/Job',
+	'collections/Jobs',
+	'tpl!jobs/list',
+	'tpl!jobs/item'
+], function(Backbone, Handlebars, ItemView, ListView, JobModel, Jobs, template, providerTempalte) {
 
 	/**
 	 * @class views.links.List
@@ -36,10 +36,10 @@ define([
 		/**
 		 * @property className
 		 * @type {string}
-		 * @default 'providerList'
+		 * @default 'jobList'
 		 * @protected
 		 */
-		className: 'links',
+		className: 'jobList',
 
 		/**
 		 * @property events
@@ -47,8 +47,6 @@ define([
 		 * @protected
 		 */
 		events: {
-			'click .new':            'toggleProvider',
-			'click ul.providers li': 'add'
 		},
 
 		/**
@@ -57,38 +55,7 @@ define([
 		 * @public
 		 */
 		renderTemplate: function() {
-			var self = this;
 			this.$el.html(template());
-			var $providerList = this.$el.find('ul.providers');
-			new Providers().fetch({
-				success: function(providers) {
-					providers.each(function(provider) {
-						$providerList.append(
-							providerTempalte(provider.richAttributes())
-						);
-					});
-				}
-			});
-		},
-
-		/**
-		 * @method toggleProvider
-		 * @param e {MouseEvent}
-		 * @public
-		 */
-		toggleProvider: function(e) {
-			this.$el.toggleClass('showProviders');
-		},
-
-		/**
-		 * @method add
-		 * @param e {MouseEvent}
-		 * @public
-		 */
-		add: function(e) {
-			this.collection.add(new LinkModel({
-				provider: $(e.currentTarget).data('providerId')
-			}));
 		}
 	}, {
 
@@ -107,7 +74,7 @@ define([
 		 * @protected
 		 * @static
 		 */
-		ItemView: LinkView
+		ItemView: ItemView
 	});
 
 	return View;

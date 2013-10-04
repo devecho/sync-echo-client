@@ -1,18 +1,7 @@
 <ul class="accordion">
 	<li class="source">
-        {{#if currentSource.link}}
-			<div class="summary">
-				<div class="icon">
-					<img>
-				</div>
-				<h1 class="provider">
-                    {{currentSource.provider.name}}
-				</h1>
-				<h3 class="identifier">
-                    {{currentSource.link.identifier}}
-				</h3>
-			</div>
-        {{/if}}
+		<div class="summary">
+		</div>
 
 		<a>{{local 'jobs.source.change'}}</a>
 		<ul class="popup links">
@@ -24,21 +13,10 @@
 		</ul>
 	</li>
 	<li class="target">
-        {{#if currentTarget.link}}
-			<div class="summary">
-				<div class="icon">
-					<img>
-				</div>
-				<h1 class="provider">
-                    {{currentTarget.provider.name}}
-				</h1>
-				<h3 class="identifier">
-                    {{currentTarget.link.identifier}}
-				</h3>
-			</div>
-        {{/if}}
+		<div class="summary">
+		</div>
 
-		<a>{{local 'jobs.target.change'}}</a>
+		<a>{{local 'jobs.edit.target.change'}}</a>
 		<ul class="popup links">
             {{#each link in links}}
 				<li>

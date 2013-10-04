@@ -1,5 +1,5 @@
 /**
- * @module views/jobs/Create
+ * @module views/jobs/Edit
  * @requires backbone
  * @requires lib/handlebars
  * @requires models/Job
@@ -11,13 +11,13 @@ define([
 	'app',
 	'models/Job',
 	'collections/Links',
-	'tpl!jobs/create'
+	'tpl!jobs/edit'
 ], function(Backbone, Handlebars, app, Job, Links, template) {
 	'use strict';
 
 	/**
 	 * @namespace views.jobs
-	 * @class Create
+	 * @class Edit
 	 * @constructor
 	 * @extends Backbone.View
 	 */
@@ -34,10 +34,10 @@ define([
 		/**
 		 * @property className
 		 * @type {string}
-		 * @default 'createJob'
+		 * @default 'editJob'
 		 * @protected
 		 */
-		className: 'createJob',
+		className: 'editJob',
 
 		/**
 		 * @property events
@@ -49,7 +49,8 @@ define([
 			'click .target .links li':                   'selectTarget',
 			'click .source a.select, .source .links li': 'toggleSourceLinks',
 			'click .target a.select, .target .links li': 'toggleTargetLinks',
-			'click a.submit':                            'submit'
+			'click a.submit':                            'submit',
+			'click a.delete, a.deleteCancel':            'toggleDelete'
 		},
 
 		/**
@@ -109,6 +110,7 @@ define([
 				currentTarget: this._currentTarget
 					? this._currentTarget.richAttributes() : null
 			}));
+			this.$el.toggleClass('isNew', this.model.isNew());
 			return this;
 		},
 
@@ -153,6 +155,15 @@ define([
 		},
 
 		/**
+		 * @method toggleDelete
+		 * @param e {MouseEvent}
+		 * @public
+		 */
+		toggleDelete: function(e) {
+			this.$el.find('.deleteContainer').toggleClass('confirm');
+		},
+
+		/**
 		 * @method submit
 		 * @param e {MouseEvent}
 		 * @public
@@ -164,7 +175,7 @@ define([
 				source:      {
 					type: 'source',
 					link: this._currentSource.id,
-				             data: []
+					data: []
 				},
 				target:      {
 					type: 'target',

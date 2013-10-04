@@ -2,29 +2,78 @@
 @import "mixins";
 
 #main {
+	position: fixed;
+	.fill();
+
+	> * {
+		position: absolute;
+		width: 100%
+	}
 
 	> nav {
-		.tableLayout();
+		@borderWidth: 5pt;
+		@contentHeight: @headerHeight - @borderWidth;
+		font-size: @contentHeight;
+		top: 0;
+		left: 0;
 
-		> a {
-			text-align: center;
-			font-size: 16pt;
-			line-height: 2em;
-			background: @areaColorLight;
-			color: @fontColor;
+		> div {
+			.tableLayout();
+			height: auto;
 
-			&:hover, &:focus {
-				background: @accentColorLight;
-			}
+			> a {
+				.areaLink();
+				font-size: @contentHeight / 4;
+				line-height: @contentHeight / 2;
+				border-bottom: @borderWidth solid @areaColor;
 
-			&.active {
-				color: #FFF;
-				background: @accentColor;
+				&.active {
+					border-bottom-color: @accentColor;
+					color: #FFF;
+				}
+
+				> i {
+					float: left;
+					line-height: @contentHeight;
+					font-size: 16pt;
+					margin: 0 @paddingNormal;
+				}
+
+				h1, h3 {
+					margin: 0;
+				}
+
+				h1 {
+					line-height: 24pt;
+				}
+
+				h3 {
+					line-height: 16pt;
+				}
 			}
 		}
 	}
 
 	> .main {
+		top: @headerHeight;
+		bottom: @footerHeight;
+		left: 0;
 		padding: @paddingBig;
+		overflow-y: auto;
+	}
+
+	#footer {
+		bottom: 0;
+		left: 0;
+		height: @footerHeight;
+		width: 100%;
+		background: @areaColorLight;
+		color: @fontColorLight;
+		line-height: @footerHeight;
+		padding: 0 @paddingNormal;
+
+		.design {
+			float: right;
+		}
 	}
 }
