@@ -1,1 +1,0 @@
-[{"type":"provider","id":1,"name":"fileNshare","url":"https://www.filenshare.com","version":"all","auth":{"mode":"basic","data":[{"name":"username","type":"TEXT"},{"name":"password","type":"PASSWORD"},{"name":"url","type":"URL"}]}}]

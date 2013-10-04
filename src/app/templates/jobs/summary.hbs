@@ -1,0 +1,50 @@
+<ul class="accordion">
+	<li class="source">
+        {{#if currentSource.link}}
+			<div class="summary">
+				<div class="icon">
+					<img>
+				</div>
+				<h1 class="provider">
+                    {{currentSource.provider.name}}
+				</h1>
+				<h3 class="identifier">
+                    {{currentSource.link.identifier}}
+				</h3>
+			</div>
+        {{/if}}
+
+		<a>{{local 'jobs.source.change'}}</a>
+		<ul class="popup links">
+            {{#each link in links}}
+				<li>
+                    {{identifier}}
+				</li>
+            {{/each}}
+		</ul>
+	</li>
+	<li class="target">
+        {{#if currentTarget.link}}
+			<div class="summary">
+				<div class="icon">
+					<img>
+				</div>
+				<h1 class="provider">
+                    {{currentTarget.provider.name}}
+				</h1>
+				<h3 class="identifier">
+                    {{currentTarget.link.identifier}}
+				</h3>
+			</div>
+        {{/if}}
+
+		<a>{{local 'jobs.target.change'}}</a>
+		<ul class="popup links">
+            {{#each link in links}}
+				<li>
+                    {{identifier}}
+				</li>
+            {{/each}}
+		</ul>
+	</li>
+</ul>

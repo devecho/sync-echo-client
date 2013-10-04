@@ -1,0 +1,106 @@
+<a href="#jobs">
+	<i class="icon-arrow-left bold"></i>
+    {{local 'jobs.create.back'}}
+</a>
+
+<form>
+	<li class="selection">
+		<div class="source">
+			<div>
+				<h1>
+                    {{local 'jobs.create.source.headline'}}
+				</h1>
+
+				<a class="select" data-popup-selector=".popup">
+                    {{#if currentSource}}
+                        {{#with currentSource}}
+							<span class="providerName">{{providerName}}</span>
+							(<span>{{identifier}}</span>)
+                        {{/with}}
+                    {{else}}
+						<span class="noneSelected">{{local 'common.noneselected'}}</span>
+                    {{/if}}
+				</a>
+
+
+				<div class="popup"
+				     data-popup-orientation="right"
+				     data-popup-align="top">
+
+					<ul class="links">
+                        {{#each links}}
+							<li data-link-id="{{id}}">
+								<strong>{{providerName}}</strong>
+
+								(<span>{{identifier}}</span>)
+							</li>
+                        {{/each}}
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div class="target">
+
+			<div>
+				<h1>
+                    {{local 'jobs.create.target.headline'}}
+				</h1>
+
+				<a class="select" data-popup-selector=".popup">
+                    {{#if currentTarget}}
+                        {{#with currentTarget}}
+							<span class="providerName">{{providerName}}</span>
+							(<span>{{identifier}}</span>)
+                        {{/with}}
+                    {{else}}
+						<span class="noneSelected">{{local 'common.noneselected'}}</span>
+                    {{/if}}
+				</a>
+
+
+				<div class="popup"
+				     data-popup-orientation="right"
+				     data-popup-align="top">
+
+					<ul class="links">
+                        {{#each links}}
+							<li data-link-id="{{id}}">
+								<strong>{{providerName}}</strong>
+
+								(<span>{{identifier}}</span>)
+							</li>
+                        {{/each}}
+					</ul>
+				</div>
+			</div>
+		</div>
+	</li>
+
+	<li class="info">
+		<div>
+			<h1>
+                {{local 'jobs.create.info.headline'}}
+			</h1>
+
+			<form>
+				<div>
+					<label>{{local 'term.title'}}</label>
+
+					<div class="input">
+						<input type="text" class="name">
+					</div>
+				</div>
+				<div>
+					<label>{{local 'term.description'}}</label>
+
+					<div class="input">
+						<input type="text" class="description">
+					</div>
+				</div>
+			</form>
+		</div>
+	</li>
+
+	<a class="submit btn positive center">{{local 'action.save'}}</a>
+</form>

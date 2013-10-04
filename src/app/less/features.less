@@ -1,0 +1,105 @@
+@import "variables";
+@import "mixins";
+
+textarea {
+	margin: 0;
+	padding: @paddingSmall;
+	border: 1pt solid @areaColorLight;
+	outline: none;
+}
+
+a.btn {
+	display: inline-block;
+	padding: 0 @paddingSmall;
+	background: @areaColor;
+	color: #FFF;
+	font-size: 1em;
+	line-height: 2em;
+
+	&:hover, &:focus {
+		background: @areaColorLight;
+		color: @fontColor;
+	}
+
+	&:active {
+		color: #FFF;
+		background: @areaColorDark;
+	}
+
+	&.positive {
+		background: @accentColor;
+
+		&:hover, &:focus {
+			color: #FFF;
+			background: @accentColorLight;
+		}
+
+		&:active {
+			background: @accentColorDark;
+		}
+	}
+
+	i:first-child {
+		margin-right: @paddingSmall;
+	}
+
+	> * {
+		vertical-align: middle;
+	}
+}
+
+div.btnBar {
+	display: table;
+	font-size: 1em;
+
+	> a.btn {
+		display: table-cell;
+		border-left: 1pt solid #FFF;
+		vertical-align: top;
+		text-align: center;
+
+		&:first-child {
+			border-left: none;
+		}
+	}
+
+	&.equal {
+		table-layout: fixed;
+
+		> a.btn {
+			width: 1%;
+		}
+	}
+}
+
+form {
+	display: table;
+	.fill();
+
+	> div {
+		display: table-row;
+
+		> * {
+			display: table-cell;
+		}
+
+		> .input {
+			input {
+				width: 100%;
+				max-width: 200pt;
+			}
+			padding-bottom: @paddingSmall;
+		}
+
+		> .btnBar {
+			max-width: 200pt;
+		}
+
+		> label {
+			padding-right: @paddingSmall;
+			text-align: right;
+			width: 1px;
+			.singleLine();
+		}
+	}
+}

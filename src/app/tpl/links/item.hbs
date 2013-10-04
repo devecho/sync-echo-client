@@ -6,6 +6,7 @@
 	<h1>{{provider.name}}</h1>
 
 	<div class="view">
+		<h2>{{identifier}}</h2>
 		<a class="edit btn positive">
 			<i class="icon-link"></i>
 			{{#if link.isNew}}
@@ -15,7 +16,7 @@
 			{{/if}}
 		</a>
 
-		<div class="deleteContainer btnBar equal">
+		<div class="deleteContainer btnBar">
 			<a class="delete btn">
 				<i class="icon-cross"></i>
 				{{local 'action.delete'}}
