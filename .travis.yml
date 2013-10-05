@@ -1,7 +1,7 @@
 language: node_js
 node_js:
   - "0.11"
-script: 
+before_script:
   - npm install -g grunt-cli
-  - export PATH=$PATH:/usr/local/bin:/usr/local/share/npm/bin
+script: 
   - grunt dev
