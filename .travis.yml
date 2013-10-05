@@ -5,3 +5,5 @@ before_script:
   - npm install -g grunt-cli
 script: 
   - grunt dev
+after_success:
+# add upload
