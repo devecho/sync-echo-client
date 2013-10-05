@@ -2,5 +2,4 @@ language: node_js
 node_js:
 	- "0.11"
 script: 
-	- export PATH=$PATH:/usr/local/bin:/usr/local/share/npm/bin
-	- grunt dev
+	- "/usr/local/bin:/usr/local/share/npm/bin/grunt dev"
