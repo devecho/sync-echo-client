@@ -74,3 +74,13 @@ ul.horizontal {
 		float: left;
 	}
 }
+
+.animateHeight {
+	height: 0;
+	overflow: hidden;
+	.transition(height);
+
+	> div {
+		height: auto;
+	}
+}

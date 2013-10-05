@@ -9,12 +9,15 @@ textarea {
 }
 
 a.btn {
+	.flatDesign();
+	outline: none;
 	display: inline-block;
 	padding: 0 @paddingSmall;
 	background: @areaColor;
 	color: #FFF;
 	font-size: 1em;
 	line-height: 2.5em;
+	.transition2(background, color, @transitionSpeedFast);
 
 	&:hover, &:focus {
 		background: @areaColorLight;
@@ -75,7 +78,16 @@ div.btnBar {
 	}
 }
 
-form {
+a.btn, div.btnBar > a.btn {
+	&.ghosted, &.ghosted:first-child, &.ghosted:hover, &.ghosted:focus, &.active {
+		cursor: default;
+		border: 1pt solid @areaColorDark;
+		color: @fontColor;
+		background: #FFF;
+	}
+}
+
+.gridForm {
 	display: table;
 	.fill();
 
@@ -89,13 +101,8 @@ form {
 		> .input {
 			input {
 				width: 100%;
-				max-width: 200pt;
 			}
 			padding-bottom: @paddingSmall;
-		}
-
-		> .btnBar {
-			max-width: 200pt;
 		}
 
 		> label {
@@ -115,6 +122,17 @@ form {
 		padding: 0.75em;
 		height: 2.5em;
 		outline: none;
+		border: 1pt solid @areaColorDark;
+		.transition(border, @transitionSpeed);
+		.flatDesign();
+
+		&:focus {
+			border-color: @accentColor;
+		}
+
+		&.invalid {
+			border-color: #F00;
+		}
 	}
 }
 

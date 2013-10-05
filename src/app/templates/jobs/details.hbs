@@ -1,15 +1,13 @@
-<a href="#jobs">
+<a href="#jobs" class="back">
 	<i class="icon-arrow-left bold"></i>
 	{{local 'jobs.details.back'}}
 </a>
 
-{{#with job}}
-	<h1 class="name">{{name}}</h1>
-	<h2 class="description">{{description}}</h2>
-{{/with}}
-
 <aside class="actions">
-	<a class="btn edit">{{local 'actions.edit'}}</a>
+	<a class="edit btn positive center" href="#jobs/{{job.id}}/edit">
+		<i class="icon-pen"></i>
+		{{local 'action.edit'}}
+	</a>
 
 	<div class="deleteContainer btnBar">
 		<a class="delete btn">
@@ -26,6 +24,11 @@
 		</a>
 	</div>
 </aside>
+
+{{#with job}}
+	<h1 class="name">{{name}}</h1>
+	<h2 class="description">{{description}}</h2>
+{{/with}}
 
 {{#if source}}
 	<label>{{local 'jobs.details.source.label'}}:</label>

@@ -4,3 +4,4 @@ node_modules/*
 .project
 out/
 src/test/app/
+doc/

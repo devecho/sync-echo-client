@@ -6,6 +6,18 @@ define([
 	'core/URLPattern'
 ], function(config, Backbone, _, Path, URLPattern) {
 
+	/**
+	 * @for Backbone
+	 * @method onerror
+	 * @param method {string]
+	 * @param options {Object}
+	 * @param model {Backbone.Model, Backbone.Collection}
+	 * @public
+	 */
+	Backbone.onerror = function(method, options, model) {
+
+	}
+
 
 	_.extend(Backbone.Router.prototype, new function() {
 
@@ -65,6 +77,14 @@ define([
 			 * @private
 			 */
 			_renderedOnce: false,
+
+			/**
+			 * @property _lastHeight
+			 * @type {number}
+			 * @default 0
+			 * @private
+			 */
+			_lastHeight: 0,
 
 			/**
 			 * @for Backbone.View
@@ -263,6 +283,16 @@ define([
 					this.trigger('append');
 				}
 				return this;
+			},
+
+			/**
+			 * @method animateHeight
+			 * @protected
+			 */
+			animateHeight: function() {
+				var oldHeight = this._lastHeight;
+				this._lastHeight = this.$el.find('> *').outerHeight(true);
+				this.$el.css('height', this._lastHeight);
 			}
 		};
 	});
@@ -286,6 +316,7 @@ define([
 				error:   function() {
 					var ret = error.apply(this, arguments);
 					options.always && options.always();
+					Backbone.onerror(method, options, model);
 					return ret;
 				}
 			}));
@@ -402,7 +433,8 @@ define([
 				options = options || {};
 				this.urlPattern = new URLPattern(this.urlRoot);
 				this.urlParams =
-				_.extend(options.params || {}, this.collection ? this.collection.urlParams : {});
+				_.extend(options.params || {}, this.collection ?
+				                               this.collection.urlParams : {});
 				for(var i in this.defaults) {
 					if((
 						   typeof this.defaults[i] === 'object') &&
@@ -448,7 +480,16 @@ define([
 				return this.map(function(model) {
 					return model.richAttributes(options);
 				});
-			}
+			},
+
+			/**
+			 * @for Backbone.Collection
+			 * @method sync
+			 * @param options {Object}
+			 * @return {$.Deferred}
+			 * @public
+			 */
+			sync: syncWrapper(Backbone.Model.prototype.sync)
 		}
 	});
 
@@ -473,7 +514,8 @@ define([
 				options = options || {};
 				this.urlPattern = new URLPattern(this.urlRoot);
 				this.urlParams =
-				_.extend(options.params || {}, this.collection ? this.collection.urlParams : {});
+				_.extend(options.params || {}, this.collection ?
+				                               this.collection.urlParams : {});
 			},
 
 			/**
@@ -546,7 +588,33 @@ define([
 					config('service'),
 					this.urlPattern.generate(_.extend(this.urlParams, {id: this.id})));
 				return path.toString();
-			}
+			},
+
+			/**
+			 * @for Backbone.Model
+			 * @method destroy
+			 * @param options {Object}
+			 * @return {$.Deferred}
+			 * @public
+			 */
+			destroy: (function() {
+				var destroy = Backbone.Model.prototype.destroy;
+
+				return function(options) {
+					options = options || {};
+					options.dataType = options.dataType || 'text';
+					return destroy.apply(this, arguments);
+				}
+			})(),
+
+			/**
+			 * @for Backbone.Model
+			 * @method sync
+			 * @param options {Object}
+			 * @return {$.Deferred}
+			 * @public
+			 */
+			sync: syncWrapper(Backbone.Model.prototype.sync)
 		}
 	});
 

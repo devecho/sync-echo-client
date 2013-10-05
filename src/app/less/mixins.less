@@ -4,6 +4,7 @@
 	background: @color;
 	color: @fontColor;
 	cursor: pointer;
+	.transition2(background, color, @transitionSpeedFast);
 
 	&:hover, &:focus {
 		background: lighten(@color, @effectLighten);
@@ -56,12 +57,39 @@
 	-o-transition: @prop ease-in-out @speed;
 }
 
+.transition2(@prop1, @prop2, @speed: @transitionSpeed) {
+	-webkit-transition: @prop1 ease-in-out @speed, @prop2 ease-in-out @speed;
+	-moz-transition: @prop1 ease-in-out @speed, @prop2 ease-in-out @speed;
+	-ms-transition: @prop1 ease-in-out @speed, @prop2 ease-in-out @speed;
+	-o-transition: @prop1 ease-in-out @speed, @prop2 ease-in-out @speed;
+}
+
 .transitionAll (@value) {
 	-webkit-transition: @value;
 	-moz-transition: @value;
 	-ms-transition: @value;
 	-o-transition: @value;
 	transition: @value;
+}
+
+.boxShadow(@value) {
+	box-shadow: @value;
+	-moz-box-shadow: @value;
+	-webkit-box-shadow: @value;
+	-ms-box-shadow: @value;
+	-o-box-shadow: @value;
+}
+
+.textShadow(@value) {
+	text-shadow: @value;
+	-moz-text-shadow: @value;
+	-webkit-text-shadow: @value;
+	-ms-text-shadow: @value;
+	-o-text-shadow: @value;
+}
+
+.flatDesign() {
+	.boxShadow(none);
 }
 
 .singleLine() {

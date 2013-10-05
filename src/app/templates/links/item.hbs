@@ -1,44 +1,46 @@
-<div class="icon">
-	<img>
-</div>
-
-<div class="cell">
-	<h1>{{provider.name}}</h1>
-
-	<div class="view">
-		<h2>{{identifier}}</h2>
-		<a class="edit btn positive">
-			<i class="icon-link"></i>
-			{{#if link.isNew}}
-				{{local 'action.link'}}
-			{{else}}
-				{{local 'action.edit'}}
-			{{/if}}
-		</a>
-
-		<div class="deleteContainer btnBar">
-			<a class="delete btn">
-				<i class="icon-cross"></i>
-				{{local 'action.delete'}}
-			</a>
-			<a class="deleteConfirm btn">
-				<i class="icon-checkmark"></i>
-				{{local 'action.confirm'}}
-			</a>
-			<a class="deleteCancel btn">
-				<i class="icon-cross"></i>
-				{{local 'action.cancel'}}
-			</a>
-		</div>
+<div>
+	<div class="icon">
+		<img>
 	</div>
 
-	<form>
-		<div class="buttons">
-			<div></div>
-			<div class="btnBar equal">
-				<a class="submit save btn positive">{{local 'action.save'}}</a>
-				<a class="cancel btn">{{local 'action.cancel'}}</a>
+	<div class="cell">
+		<h1>{{provider.name}}</h1>
+
+		<div class="view">
+			<h2>{{identifier}}</h2>
+			<a class="edit btn positive">
+				<i class="icon-link"></i>
+				{{#if link.isNew}}
+					{{local 'action.link'}}
+				{{else}}
+					{{local 'action.edit'}}
+				{{/if}}
+			</a>
+
+			<div class="deleteContainer btnBar">
+				<a class="delete btn">
+					<i class="icon-cross"></i>
+					{{local 'action.delete'}}
+				</a>
+				<a class="deleteConfirm btn">
+					<i class="icon-checkmark"></i>
+					{{local 'action.confirm'}}
+				</a>
+				<a class="deleteCancel btn">
+					<i class="icon-cross"></i>
+					{{local 'action.cancel'}}
+				</a>
 			</div>
 		</div>
-	</form>
+
+		<form class="gridForm">
+			<div class="buttons">
+				<div></div>
+				<div class="btnBar equal">
+					<a class="submit save btn positive">{{local 'action.save'}}</a>
+					<a class="cancel btn">{{local 'action.cancel'}}</a>
+				</div>
+			</div>
+		</form>
+	</div>
 </div>

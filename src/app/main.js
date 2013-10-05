@@ -44,14 +44,23 @@ define('app', [], function() {
 	};
 });
 
-requirejs(['app', 'localization', 'features/Popup'], function(app, localization, Popup) {
-	requirejs(['backbone', 'routers/Main'], function(Backbone, MainRouter) {
-		app.router = new MainRouter();
-		Backbone.history.start();
+requirejs(['app', 'localization', 'features/Popup', 'features/Validation',
+           'features/Buttons', 'features/TabArea'], function(app, localization, Popup) {
+	requirejs(['backbone', 'routers/Main', 'views/general/Error', 'views/general/Login'
+	], function(Backbone, MainRouter, ErrorView, LoginView) {
+		Backbone.onerror = function(method, options, model) {
+			new ErrorView({
+				info: {
+					method:  method,
+					options: options,
+					model:   model
+				}
+			}).show();
+		}
 
-		// TEMP
-		$(document).on('click', '.providers li', function(e) {
-			$(e.currentTarget).toggleClass('checked');
+		new LoginView().render().appendTo('body').once('login', function() {
+			app.router = new MainRouter();
+			Backbone.history.start();
 		});
 	});
 });

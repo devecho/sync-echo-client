@@ -2,8 +2,8 @@ module.exports = function(grunt) {
 
 	// Project configuration.
 	grunt.initConfig({
-		pkg: grunt.file.readJSON('package.json'),
-		out: 'out/',
+		pkg:  grunt.file.readJSON('package.json'),
+		out:  'out/',
 		test: 'src/test/app/build/',
 
 		clean: {
@@ -17,16 +17,16 @@ module.exports = function(grunt) {
 		},
 
 		copy: {
-			dev: {
-				cwd: 'src/app/',
-				src: '**',
-				dest: '<%= out %>dev',
+			dev:  {
+				cwd:    'src/app/',
+				src:    '**',
+				dest:   '<%= out %>dev',
 				expand: true
 			},
 			test: {
-				cwd: '<%= out %>dev/',
-				src: '**',
-				dest: '<%= test %>',
+				cwd:    '<%= out %>dev/',
+				src:    '**',
+				dest:   '<%= test %>',
 				expand: true
 			}
 		},
@@ -44,6 +44,19 @@ module.exports = function(grunt) {
 				files: 'src/app/**',
 				tasks: ['dev']
 			}
+		},
+
+		yuidoc: {
+			compile: {
+				name:        '<%= pkg.name %>',
+				description: '<%= pkg.description %>',
+				version:     '<%= pkg.version %>',
+				url:         '<%= pkg.homepage %>',
+				options:     {
+					paths:    'src/app/',
+					outdir:   'doc/'
+				}
+			}
 		}
 	});
 
@@ -51,6 +64,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-less');
 	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-contrib-yuidoc');
 
 	grunt.registerTask('dev', [ 'clean:out', 'copy:dev', 'less:dev', 'clean:less' ]);
 

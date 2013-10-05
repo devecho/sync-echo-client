@@ -60,6 +60,12 @@
 		left: 0;
 		padding: @paddingBig;
 		overflow-y: auto;
+
+		> * {
+			margin: auto;
+			max-width: @deviceWidthBig;
+			min-width: @deviceWidthSmall;
+		}
 	}
 
 	#footer {
@@ -68,12 +74,64 @@
 		height: @footerHeight;
 		width: 100%;
 		background: @areaColorLight;
-		color: @fontColorLight;
+		color: @fontColor;
 		line-height: @footerHeight;
 		padding: 0 @paddingNormal;
 
 		.design {
 			float: right;
+		}
+	}
+}
+
+.login {
+	@formHeight: 150pt;
+	font-size: 14pt;
+
+	form {
+		position: fixed;
+		top: 50%;
+		margin-top: -(@formHeight / 2);
+		left: 0;
+		width: 100%;
+		height: @formHeight;
+
+		> .gridForm {
+			width: 400pt;
+			margin: auto;
+		}
+	}
+
+	.services {
+		.noListStyle();
+		position: fixed;
+		top: 50%;
+		margin-top: @formHeight / 2;
+		text-align: center;
+		width: 100%;
+
+		.serviceSplitter {
+			margin: @paddingNormal 0;
+		}
+
+		> li {
+			display: inline-block;
+			line-height: 30pt;
+			padding: @paddingNormal;
+			background: #FFF;
+			cursor: pointer;
+			.transition(background);
+
+			&:hover, &:focus {
+				background: @areaColorLight;
+			}
+
+			img {
+				width: 30pt;
+				height: 30pt;
+				float: left;
+				margin-right: @paddingNormal;
+			}
 		}
 	}
 }

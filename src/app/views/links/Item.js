@@ -30,6 +30,14 @@ define([
 		tagName: 'li',
 
 		/**
+		 * @property className
+		 * @type {string}
+		 * @default 'animateHeight'
+		 * @protected
+		 */
+		className: 'animateHeight',
+
+		/**
 		 * @property _provider
 		 * @type {models.Provider}
 		 * @default null
@@ -66,6 +74,10 @@ define([
 				success: function() {
 					self.render();
 				}
+			});
+
+			this.listenTo(this, 'append', function() {
+				self.animateHeight();
 			});
 		},
 
@@ -111,6 +123,7 @@ define([
 		 */
 		edit: function(e) {
 			this.$el.addClass('editing');
+			this.animateHeight();
 		},
 
 		/**
@@ -124,6 +137,7 @@ define([
 				return;
 			}
 			this.$el.removeClass('editing');
+			this.animateHeight();
 		},
 
 		/**
@@ -138,6 +152,7 @@ define([
 			}, {
 				success: function() {
 					self.$el.removeClass('editing');
+					self.animateHeight();
 				}
 			});
 		},

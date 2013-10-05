@@ -1,25 +1,25 @@
 <a href="#jobs">
 	<i class="icon-arrow-left bold"></i>
-    {{local 'jobs.edit.back'}}
+	{{local 'jobs.edit.back'}}
 </a>
 
-<form>
+<form class="gridForm">
 	<li class="selection">
 		<div class="source">
 			<div>
 				<h1>
-                    {{local 'jobs.edit.source.headline'}}
+					{{local 'jobs.edit.source.headline'}}
 				</h1>
 
 				<a class="select" data-popup-selector=".popup">
-                    {{#if currentSource}}
-                        {{#with currentSource}}
+					{{#if currentSource}}
+						{{#with currentSource}}
 							<span class="providerName">{{providerName}}</span>
 							(<span>{{identifier}}</span>)
-                        {{/with}}
-                    {{else}}
+						{{/with}}
+					{{else}}
 						<span class="noneSelected">{{local 'common.noneselected'}}</span>
-                    {{/if}}
+					{{/if}}
 				</a>
 
 
@@ -28,13 +28,13 @@
 				     data-popup-align="top">
 
 					<ul class="links">
-                        {{#each links}}
+						{{#each links}}
 							<li data-link-id="{{id}}">
 								<strong>{{providerName}}</strong>
 
 								(<span>{{identifier}}</span>)
 							</li>
-                        {{/each}}
+						{{/each}}
 					</ul>
 				</div>
 			</div>
@@ -44,18 +44,18 @@
 
 			<div>
 				<h1>
-                    {{local 'jobs.edit.target.headline'}}
+					{{local 'jobs.edit.target.headline'}}
 				</h1>
 
 				<a class="select" data-popup-selector=".popup">
-                    {{#if currentTarget}}
-                        {{#with currentTarget}}
+					{{#if currentTarget}}
+						{{#with currentTarget}}
 							<span class="providerName">{{providerName}}</span>
 							(<span>{{identifier}}</span>)
-                        {{/with}}
-                    {{else}}
+						{{/with}}
+					{{else}}
 						<span class="noneSelected">{{local 'common.noneselected'}}</span>
-                    {{/if}}
+					{{/if}}
 				</a>
 
 
@@ -64,13 +64,13 @@
 				     data-popup-align="top">
 
 					<ul class="links">
-                        {{#each links}}
+						{{#each links}}
 							<li data-link-id="{{id}}">
 								<strong>{{providerName}}</strong>
 
 								(<span>{{identifier}}</span>)
 							</li>
-                        {{/each}}
+						{{/each}}
 					</ul>
 				</div>
 			</div>
@@ -80,25 +80,30 @@
 	<li class="info">
 		<div>
 			<h1>
-                {{local 'jobs.edit.info.headline'}}
+				{{local 'jobs.edit.info.headline'}}
 			</h1>
 
-			<form>
+			<div class="form">
 				<div>
 					<label>{{local 'term.title'}}</label>
 
 					<div class="input">
-						<input type="text" class="name">
+						<input type="text"
+						       class="name"
+						       value="{{job.name}}"
+						       data-validate="{{validate required=true}}">
 					</div>
 				</div>
 				<div>
 					<label>{{local 'term.description'}}</label>
 
 					<div class="input">
-						<input type="text" class="description">
+						<input type="text"
+						       class="description"
+						       value="{{job.description}}">
 					</div>
 				</div>
-			</form>
+			</div>
 		</div>
 	</li>
 

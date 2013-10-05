@@ -30,18 +30,21 @@ define([
 		 * @public
 		 */
 		routes: {
-			'':          'routeDefault',
-			'links':     'links',
-			'jobs':      'jobs',
-			'jobs/edit': 'editJob',
-			'jobs/:id':  'job'
+			'':              'routeDefault',
+			'links':         'links',
+			'jobs':          'jobs',
+			'jobs/create':   'editJob',
+			'jobs/:id':      'job',
+			'jobs/:id/edit': 'editJob',
+			'impressum':     'impressum'
 		},
 
 		/**
 		 * @method initialize
+		 * @param options {Object}
 		 * @public
 		 */
-		initialize: function() {
+		initialize: function(options) {
 			this._container = new ContainerView().render();
 			this._container.appendTo('body');
 		},
@@ -51,7 +54,7 @@ define([
 		 * @public
 		 */
 		routeDefault: function() {
-			this.links();
+			this.navigate('jobs', true);
 			return this;
 		},
 
@@ -77,11 +80,12 @@ define([
 
 		/**
 		 * @method editJob
+		 * @param id {string}
 		 * @public
 		 */
-		editJob: function() {
+		editJob: function(id) {
 			this.before(function() {
-				this._container.editJob();
+				this._container.editJob(id);
 			});
 		},
 
@@ -93,6 +97,16 @@ define([
 		job: function(id) {
 			this.before(function() {
 				this._container.job(id);
+			});
+		},
+
+		/**
+		 * @method impressum
+		 * @public
+		 */
+		impressum: function() {
+			this.before(function() {
+				this._container.impressum();
 			});
 		},
 

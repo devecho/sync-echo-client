@@ -53,8 +53,6 @@
 
 .editJob {
 	.noListStyle();
-	margin: auto;
-	max-width: @deviceWidthBig;
 
 	> form > li {
 		margin: @paddingBig 0;
@@ -139,5 +137,29 @@
 	> a.submit {
 		float: left;
 		margin-right: @paddingSmall;
+	}
+}
+
+.jobDetails {
+
+	a.back {
+		display: block;
+		margin-bottom: @paddingNormal;
+	}
+
+	aside.actions {
+		float: right;
+		width: 200pt;
+		margin-left: @paddingBig;
+		padding: @paddingBig;
+		border-left: 1pt solid @areaColor;
+
+		a.btn {
+			width: 75pt;
+		}
+
+		a.edit {
+			margin-bottom: @paddingSmall;
+		}
 	}
 }

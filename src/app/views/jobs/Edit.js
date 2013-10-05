@@ -49,8 +49,7 @@ define([
 			'click .target .links li':                   'selectTarget',
 			'click .source a.select, .source .links li': 'toggleSourceLinks',
 			'click .target a.select, .target .links li': 'toggleTargetLinks',
-			'click a.submit':                            'submit',
-			'click a.delete, a.deleteCancel':            'toggleDelete'
+			'click a.submit':                            'submit'
 		},
 
 		/**
@@ -84,13 +83,14 @@ define([
 		 */
 		initialize: function(options) {
 			var self = this;
-			this.model = new Job();
 			this._links = new Links();
 
 			this.listenTo(this._links, 'change', this.render, this);
 
 			this._links.fetch({
 				success: function() {
+					self._currentSource = self._links.get(self.model.get('source').link);
+					self._currentTarget = self._links.get(self.model.get('target').link)
 					self.render();
 				}
 			});
@@ -104,6 +104,7 @@ define([
 		 */
 		render: function() {
 			this.$el.html(template({
+				job:   this.model.richAttributes(),
 				links: this._links.richAttributes(),
 				currentSource: this._currentSource
 					? this._currentSource.richAttributes() : null,
@@ -169,7 +170,7 @@ define([
 		 * @public
 		 */
 		submit: function(e) {
-			new Job({
+			this.model.save({
 				name:        this.$el.find('input.name').val(),
 				description: this.$el.find('input.description').val(),
 				source:      {
@@ -182,11 +183,11 @@ define([
 					link: this._currentTarget.id,
 					data: []
 				}
-			}).save(null, {
-					success: function() {
-						app.router.navigate('jobs', true);
-					}
-				});
+			}, {
+				success: function() {
+					app.router.navigate('jobs', true);
+				}
+			});
 		}
 	});
 

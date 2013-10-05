@@ -56,40 +56,47 @@
 		.noListStyle();
 
 		> li {
-			.tableLayout();
-			height: auto;
-			table-layout: auto;
-			margin-top: @paddingNormal;
-			padding: @paddingNormal;
-			border-top: 1pt solid @areaColor;
+			> div {
+				.tableLayout();
+				height: auto;
+				table-layout: auto;
+				margin-top: @paddingNormal;
+				padding: @paddingNormal;
+				border-top: 1pt solid @areaColor;
 
-			> .icon {
-				width: 1px;
+				> .icon {
+					width: 1px;
 
-				img {
-					width: 60pt;
-					height: 60pt;
-				}
-			}
-
-			> .cell {
-				padding-left: @paddingNormal;
-
-				h1 {
-					font-weight: bold;
-					margin-bottom: @paddingSmall;
-				}
-
-				form {
-					display: none;
-
-					.btnBar {
-						width: 200pt;
+					img {
+						width: 60pt;
+						height: 60pt;
 					}
 				}
+
+				> .cell {
+					padding-left: @paddingNormal;
+
+					h1 {
+						font-weight: bold;
+						margin-bottom: @paddingSmall;
+					}
+
+					form {
+						display: none;
+
+						.btnBar {
+							width: 200pt;
+						}
+					}
+				}
+
+				a.edit {
+					float: left;
+					margin-right: @paddingSmall;
+				}
 			}
 
-			&.editing > .cell {
+			&.editing > div > .cell {
 				form {
 					display: table;
 				}
@@ -97,11 +104,6 @@
 				.view {
 					display: none;
 				}
-			}
-
-			a.edit {
-				float: left;
-				margin-right: @paddingSmall;
 			}
 		}
 	}

@@ -1,0 +1,46 @@
+<div>
+	<form data-tabarea="true">
+		<div class="gridForm">
+			<div>
+				<label>{{local 'general.login.username.label'}}</label>
+
+				<div class="input">
+					<input type="text"
+					       class="username"
+					       data-validate="{{validate required=true}}"
+							data-tabindex="1">
+				</div>
+			</div>
+			<div>
+				<label>{{local 'general.login.password.label'}}</label>
+
+				<div class="input">
+					<input type="text"
+					       class="password"
+					       data-validate="{{validate required=true}}"
+					       data-tabindex="2">
+				</div>
+			</div>
+
+			<div class="buttons">
+				<div></div>
+				<div class="btnBar equal">
+					<a class="submit btn positive"
+					   data-tabindex="3">{{local 'action.login'}}</a>
+				</div>
+			</div>
+		</div>
+	</form>
+
+	<ul class="services">
+
+		<div class="serviceSplitter">
+			{{local 'general.login.services.description'}}
+		</div>
+
+		<li class="facebook">
+			<img src="img/logo-facebook.png">
+			<span>Facebook</span>
+		</li>
+	</ul>
+</div>

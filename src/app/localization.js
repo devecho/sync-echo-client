@@ -17,8 +17,13 @@ define(['lib/handlebars'], function(Handlebars) {
 		'action.edit':    'Edit',
 		'action.link':    'Link',
 		'action.filter':  'Filter',
+		'action.login':   'Login',
 
-		'common.noneselected': 'None selected',
+		'common.noneselected':                'None selected',
+		'general.error':                      'An unexpected error occurred',
+		'general.login.username.label':       'Username',
+		'general.login.password.label':       'Password',
+		'general.login.services.description': 'OR: Login with one of the following services',
 
 		'navigation.links.description':    'Connect to your accounts',
 		'navigation.jobs.description':     'Sync your stuff',

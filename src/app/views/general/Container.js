@@ -5,6 +5,8 @@
  * @requires views/links/List
  * @requires collections/Links
  * @requires views/jobs/Edit
+ * @requires views/jobs/Details
+ * @requires views/general/Impressum
  */
 define([
 	'backbone',
@@ -16,9 +18,10 @@ define([
 	'views/jobs/List',
 	'views/jobs/Edit',
 	'views/jobs/Details',
+	'views/general/Impressum',
 	'tpl!general/container'
 ], function(Backbone, Handlebars, Links, Jobs, Job, LinkList, JobList, EditJobView,
-            JobDetailsView, template) {
+            JobDetailsView, ImpressumView, template) {
 
 	/**
 	 * @class views.general.Container
@@ -98,11 +101,30 @@ define([
 
 		/**
 		 * @method editJob
+		 * @param id {string}
 		 * @public
 		 */
-		editJob: function() {
-			this._activateLink('jobs');
-			this.subView('.main', new EditJobView().render(), true);
+		editJob: function(id) {
+			var self = this;
+			var show = function(job) {
+				self._activateLink('jobs');
+				self.subView('.main', new EditJobView({
+					model: job
+				}).render(), true);
+			}
+
+			if(!id) {
+				show(new Job());
+			}
+			else {
+				new Job({
+					id: id
+				}).fetch({
+						success: function(job) {
+							show(job);
+						}
+					});
+			}
 		},
 
 		/**
@@ -122,6 +144,15 @@ define([
 						}).render(), true);
 					}
 				});
+		},
+
+		/**
+		 * @method impressum
+		 * @public
+		 */
+		impressum: function() {
+			this.subView('.main', new ImpressumView({
+			}).render(), true);
 		},
 
 		/**

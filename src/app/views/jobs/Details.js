@@ -44,6 +44,8 @@ define([
 		 * @protected
 		 */
 		events: {
+			'click a.delete, a.deleteCancel': 'toggleDelete',
+			'click a.deleteConfirm':          'deleteJob'
 		},
 
 		/**
@@ -94,7 +96,7 @@ define([
 		 */
 		render: function() {
 			this.$el.html(template({
-				job: this.model.richAttributes(),
+				job:    this.model.richAttributes(),
 				source: _.extend(this._source.richAttributes(), {
 					providerName: 'Test'
 				}),
@@ -104,6 +106,28 @@ define([
 				})
 			}));
 			return this;
+		},
+
+		/**
+		 * @method toggleDelete
+		 * @param e {MouseEvent}
+		 * @public
+		 */
+		toggleDelete: function(e) {
+			this.$el.find('.deleteContainer').toggleClass('confirm');
+		},
+
+		/**
+		 * @method deleteJob
+		 * @param e {MouseEvent}
+		 * @public
+		 */
+		deleteJob: function(e) {
+			this.model.destroy({
+				success: function() {
+					app.router.navigate('jobs', true);
+				}
+			});
 		}
 	});
 
