@@ -67,19 +67,32 @@ define([
 
 		/**
 		 * @method links
+		 * @param [viewId] {string}
 		 * @public
 		 */
-		links: function() {
+		links: function(viewId) {
 			this._activateLink('links');
 			var self = this;
 			new Links().fetch({
 				success: function(links) {
 					var linkList = new LinkList({
 						collection: links
-					});
-					self.subView('.main', linkList.render(), true);
+					}).render();
+					if(viewId) {
+						linkList.scrollTo(viewId);
+					}
+					self.subView('.main', linkList, true);
 				}
 			});
+		},
+
+		/**
+		 * @method link
+		 * @param viewId {string}
+		 * @public
+		 */
+		link: function(viewId) {
+			this.links(viewId);
 		},
 
 		/**

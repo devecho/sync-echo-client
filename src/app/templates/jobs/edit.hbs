@@ -11,15 +11,8 @@
 					{{local 'jobs.edit.source.headline'}}
 				</h1>
 
-				<a class="select" data-popup-selector=".popup">
-					{{#if currentSource}}
-						{{#with currentSource}}
-							<span class="providerName">{{providerName}}</span>
-							(<span>{{identifier}}</span>)
-						{{/with}}
-					{{else}}
-						<span class="noneSelected">{{local 'common.noneselected'}}</span>
-					{{/if}}
+				<a class="select" data-popup-selector=".popup"
+				   data-validate="{{validate required=true}}">
 				</a>
 
 
@@ -30,7 +23,7 @@
 					<ul class="links">
 						{{#each links}}
 							<li data-link-id="{{id}}">
-								<strong>{{providerName}}</strong>
+								<strong>{{provider.name}}</strong>
 
 								(<span>{{identifier}}</span>)
 							</li>
@@ -47,15 +40,8 @@
 					{{local 'jobs.edit.target.headline'}}
 				</h1>
 
-				<a class="select" data-popup-selector=".popup">
-					{{#if currentTarget}}
-						{{#with currentTarget}}
-							<span class="providerName">{{providerName}}</span>
-							(<span>{{identifier}}</span>)
-						{{/with}}
-					{{else}}
-						<span class="noneSelected">{{local 'common.noneselected'}}</span>
-					{{/if}}
+				<a class="select" data-popup-selector=".popup"
+				   data-validate="{{validate required=true}}">
 				</a>
 
 
@@ -66,7 +52,7 @@
 					<ul class="links">
 						{{#each links}}
 							<li data-link-id="{{id}}">
-								<strong>{{providerName}}</strong>
+								<strong>{{provider.name}}</strong>
 
 								(<span>{{identifier}}</span>)
 							</li>

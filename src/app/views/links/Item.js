@@ -15,7 +15,7 @@ define([
 ], function(Backbone, Handlebars, Provider, ListItem, template, inputTemplate) {
 
 	/**
-	 * @class views.links.Account
+	 * @class views.links.Item
 	 * @extends views.basic.ListItem
 	 * @constructor
 	 */
@@ -68,7 +68,7 @@ define([
 			var self = this;
 			ListItem.prototype.initialize.apply(this, arguments);
 			this._provider = new Provider({
-				id: this.model.get('provider')
+				id: this.model.get('provider').id
 			});
 			this._provider.fetch({
 				success: function() {
@@ -104,6 +104,7 @@ define([
 			if(this.model.isNew()) {
 				this.edit();
 			}
+			this.animateHeight();
 			return this;
 		},
 

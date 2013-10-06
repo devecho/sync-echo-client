@@ -16,7 +16,8 @@ define([
 	'collections/Providers',
 	'tpl!links/list',
 	'tpl!links/provider'
-], function(Backbone, Handlebars, LinkView, ListView, LinkModel, Providers, template, providerTempalte) {
+], function(Backbone, Handlebars, LinkView, ListView, LinkModel, Providers, template,
+            providerTempalte) {
 
 	/**
 	 * @namespace views.links
@@ -78,7 +79,11 @@ define([
 		 */
 		add: function(e) {
 			this.collection.add(new LinkModel({
-				provider: $(e.currentTarget).data('providerId')
+				provider: {
+					type: 'provider',
+					id:   $(e.currentTarget).data('providerId'),
+					data: []
+				}
 			}));
 		}
 	}, {

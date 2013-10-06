@@ -225,6 +225,18 @@ define([
 		 */
 		listElement: function() {
 			return this.$el.find(this.constructor.ulSelector);
+		},
+
+		/**
+		 * @method scrollTo
+		 * @param id {string}
+		 * @public
+		 */
+		scrollTo: function(id) {
+			var view = this.viewByModelId(id);
+			if(view !== null) {
+				view.el.scrollIntoView();
+			}
 		}
 	}, {
 		/**

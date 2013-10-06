@@ -31,8 +31,23 @@ define([
 		 */
 		/**
 		 * @property attributes.provider
+		 * @type {Object}
+		 * @default null
+		 * @protected
+		 */
+		/**
+		 * @property attributes.provider.id
+		 * @type {number}
+		 * @protected
+		 */
+		/**
+		 * @property attributes.provider.type
 		 * @type {string}
-		 * @default ''
+		 * @protected
+		 */
+		/**
+		 * @property attributes.provider.name
+		 * @type {string}
 		 * @protected
 		 */
 		/**
@@ -44,21 +59,8 @@ define([
 
 		defaults:   {
 			type:     'link',
-			provider: '',
+			provider: null,
 			data:     []
-		},
-
-		// TODO:
-		initialize: function() {
-			Backbone.Model.prototype.initialize.apply(this, arguments);
-			var self = this;
-			new (require('models/Provider'))({
-				id: this.get('provider')
-			}).fetch({
-					success: function(provider) {
-						self.set('providerName', provider.get('name'));
-					}
-				});
 		},
 
 		/**

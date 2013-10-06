@@ -32,6 +32,7 @@ define([
 		routes: {
 			'':              'routeDefault',
 			'links':         'links',
+			'links/:id':     'link',
 			'jobs':          'jobs',
 			'jobs/create':   'editJob',
 			'jobs/:id':      'job',
@@ -65,6 +66,17 @@ define([
 		links: function() {
 			this.before(function() {
 				this._container.links();
+			});
+		},
+
+		/**
+		 * @method link
+		 * @param id {string}
+		 * @public
+		 */
+		link: function(id) {
+			this.before(function() {
+				this._container.link(parseInt(id));
 			});
 		},
 

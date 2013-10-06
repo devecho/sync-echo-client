@@ -98,11 +98,9 @@ define([
 			this.$el.html(template({
 				job:    this.model.richAttributes(),
 				source: _.extend(this._source.richAttributes(), {
-					providerName: 'Test'
 				}),
 
 				target: _.extend(this._target.richAttributes(), {
-					providerName: 'Test'
 				})
 			}));
 			return this;

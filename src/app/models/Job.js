@@ -83,11 +83,13 @@ define([
 			enabled:     true,
 			source:      {
 				type: 'source',
-				link: null
+				link: null,
+				data: []
 			},
 			target:      {
 				type: 'target',
-				link: null
+				link: null,
+				data: []
 			},
 			data:        []
 		},

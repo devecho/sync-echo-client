@@ -32,15 +32,19 @@
 
 {{#if source}}
 	<label>{{local 'jobs.details.source.label'}}:</label>
-	<span class="source"><strong>
-		{{source.providerName}} ({{source.identifier}})
-	</strong></span>
+	<span class="source">
+		<a href="#links/{{source.id}}">
+			{{source.provider.name}} ({{source.identifier}})
+		</a>
+	</span>
 	<br>
 {{/if}}
 
 {{#if target}}
 	<label>{{local 'jobs.details.target.label'}}:</label>
-	<span class="target"><strong>
-		{{target.providerName}} ({{target.identifier}})
-	</strong></span>
+	<span class="target">
+		<a href="#links/{{target.id}}">
+			{{target.provider.name}} ({{target.identifier}})
+		</a>
+	</span>
 {{/if}}

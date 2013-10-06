@@ -32,7 +32,8 @@ define([
 		 * @protected
 		 */
 		events: {
-			'click a.submit': 'login'
+			'click a.submit':         'login',
+			'click a.toggleRegister': 'toggleRegister'
 		},
 
 		/**
@@ -55,6 +56,15 @@ define([
 		login: function(e) {
 			this.trigger('login');
 			this.destroy();
+		},
+
+		/**
+		 * @method toggleRegister
+		 * @param e {MouseEvent}
+		 * @public
+		 */
+		toggleRegister: function(e) {
+			this.$el.toggleClass('showRegister');
 		}
 	});
 

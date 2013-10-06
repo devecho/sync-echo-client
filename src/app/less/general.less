@@ -86,52 +86,98 @@
 
 .login {
 	@formHeight: 150pt;
+	@registerWidth: 600pt;
 	font-size: 14pt;
 
-	form {
-		position: fixed;
-		top: 50%;
-		margin-top: -(@formHeight / 2);
-		left: 0;
-		width: 100%;
-		height: @formHeight;
+	&.showRegister {
+		> .loginSite {
+			margin-left: -150%;
+		}
 
-		> .gridForm {
-			width: 400pt;
-			margin: auto;
+		> .registerSite {
+			margin-left: -(@registerWidth / 2);
 		}
 	}
 
-	.services {
-		.noListStyle();
+	> * {
 		position: fixed;
 		top: 50%;
-		margin-top: @formHeight / 2;
-		text-align: center;
-		width: 100%;
+		left: 50%;
 
-		.serviceSplitter {
-			margin: @paddingNormal 0;
-		}
+		.transition(margin-left, @transitionSpeedSlow);
+	}
 
-		> li {
-			display: inline-block;
-			line-height: 30pt;
-			padding: @paddingNormal;
-			background: #FFF;
-			cursor: pointer;
-			.transition(background);
+	> .loginSite {
+		@formWidth: 400pt;
+		margin-top: -(@formHeight / 2);
+		margin-left: -(@formWidth / 2);
 
-			&:hover, &:focus {
-				background: @areaColorLight;
-			}
+		form {
+			width: 100%;
+			height: @formHeight;
 
-			img {
-				width: 30pt;
-				height: 30pt;
-				float: left;
-				margin-right: @paddingNormal;
+			> .gridForm {
+				width: 400pt;
+				margin: auto;
 			}
 		}
+
+		.services {
+			.noListStyle();
+			text-align: center;
+			width: 100%;
+
+			.serviceSplitter {
+				margin: @paddingNormal 0;
+			}
+
+			> li {
+				display: inline-block;
+				line-height: 30pt;
+				padding: @paddingNormal;
+				background: #FFF;
+				cursor: pointer;
+				.transition(background);
+
+				&:hover, &:focus {
+					background: @areaColorLight;
+				}
+
+				img {
+					width: 30pt;
+					height: 30pt;
+					float: left;
+					margin-right: @paddingNormal;
+				}
+			}
+		}
+	}
+
+	> .registerSite {
+		width: @registerWidth;
+		margin-left: 50%;
+		margin-top: -(@formHeight / 2);
+	}
+}
+
+.error {
+	position: fixed;
+	top: 0;
+	left: 50%;
+	margin-left: -25%;
+	width: 50%;
+	background: @areaColorDark;
+	color: #FFF;
+	z-index: @zError;
+	text-align: center;
+	padding: @paddingNormal;
+
+	> i {
+		position: absolute;
+		right: @paddingNormal;
+		top: 50%;
+		.fittingFont(10pt);
+		margin-top: -0.5em;
+		cursor: pointer;
 	}
 }

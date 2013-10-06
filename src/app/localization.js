@@ -24,6 +24,13 @@ define(['lib/handlebars'], function(Handlebars) {
 		'general.login.username.label':       'Username',
 		'general.login.password.label':       'Password',
 		'general.login.services.description': 'OR: Login with one of the following services',
+		'general.login.register':             'Not registered?',
+
+		'general.register.login':                'Back to login',
+		'general.register.username.label':       'Username',
+		'general.register.email.label':          'Email',
+		'general.register.password.label':       'Password',
+		'general.register.passwordrepeat.label': 'Confirm password',
 
 		'navigation.links.description':    'Connect to your accounts',
 		'navigation.jobs.description':     'Sync your stuff',

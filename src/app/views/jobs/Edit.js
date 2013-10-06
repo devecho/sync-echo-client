@@ -11,8 +11,9 @@ define([
 	'app',
 	'models/Job',
 	'collections/Links',
+	'localization',
 	'tpl!jobs/edit'
-], function(Backbone, Handlebars, app, Job, Links, template) {
+], function(Backbone, Handlebars, app, Job, Links, local, template) {
 	'use strict';
 
 	/**
@@ -89,8 +90,8 @@ define([
 
 			this._links.fetch({
 				success: function() {
-					self._currentSource = self._links.get(self.model.get('source').link);
-					self._currentTarget = self._links.get(self.model.get('target').link)
+					self._currentSource = self._links.get(self.model.get('source').link) || null;
+					self._currentTarget = self._links.get(self.model.get('target').link) || null;
 					self.render();
 				}
 			});
@@ -112,7 +113,44 @@ define([
 					? this._currentTarget.richAttributes() : null
 			}));
 			this.$el.toggleClass('isNew', this.model.isNew());
+			this.renderSource();
+			this.renderTarget();
+			this.$el.find('form').validate();
 			return this;
+		},
+
+		/**
+		 * @method renderSource
+		 * @chainable
+		 * @public
+		 */
+		renderSource: function() {
+			var $sourceEl = this.$el.find('.source a.select');
+			if(this._currentSource === null) {
+				$sourceEl.html(local('common.noneselected'));
+			}
+			else {
+				$sourceEl.html(this._currentSource.get('provider').name + ' (' +
+				               this._currentSource.identifier() + ')');
+				$sourceEl.data('value', this._currentSource.id);
+			}
+		},
+
+		/**
+		 * @method renderTarget
+		 * @chainable
+		 * @public
+		 */
+		renderTarget: function() {
+			var $targetEl = this.$el.find('.target a.select');
+			if(this._currentTarget === null) {
+				$targetEl.html(local('common.noneselected'));
+			}
+			else {
+				$targetEl.html(this._currentTarget.get('provider').name + ' (' +
+				               this._currentTarget.identifier() + ')');
+				$targetEl.data('value', this._currentTarget.id);
+			}
 		},
 
 		/**
@@ -123,7 +161,7 @@ define([
 		selectSource: function(e) {
 			this._currentSource = this._links.get(
 				$(e.currentTarget).data('linkId'));
-			this.render();
+			this.renderSource();
 		},
 
 		/**
@@ -134,7 +172,8 @@ define([
 		selectTarget: function(e) {
 			this._currentTarget = this._links.get(
 				$(e.currentTarget).data('linkId'));
-			this.render();
+			this.renderTarget();
+			this
 		},
 
 		/**

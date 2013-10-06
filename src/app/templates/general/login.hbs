@@ -1,4 +1,4 @@
-<div>
+<div class="loginSite">
 	<form data-tabarea="true">
 		<div class="gridForm">
 			<div>
@@ -8,7 +8,7 @@
 					<input type="text"
 					       class="username"
 					       data-validate="{{validate required=true}}"
-							data-tabindex="1">
+					       data-tabindex="1">
 				</div>
 			</div>
 			<div>
@@ -43,4 +43,65 @@
 			<span>Facebook</span>
 		</li>
 	</ul>
+
+	<a class="toggleRegister">
+		{{local 'general.login.register'}}
+	</a>
+</div>
+<div class="registerSite">
+	<a class="toggleRegister">
+		<i class="icon-arrow-left"></i>
+		{{local 'general.register.login'}}
+	</a>
+
+	<form class="gridForm">
+		<div>
+			<label>{{local 'general.register.username.label'}}</label>
+
+			<div class="input">
+				<input type="text"
+				       class="username"
+				       data-validate="{{validate required=true}}"
+				       data-tabindex="1">
+			</div>
+		</div>
+		<div>
+			<label>{{local 'general.register.email.label'}}</label>
+
+			<div class="input">
+				<input type="email"
+				       class="email"
+				       data-validate="{{validate required=true}}"
+				       data-tabindex="2">
+			</div>
+		</div>
+		<div>
+			<label>{{local 'general.register.password.label'}}</label>
+
+			<div class="input">
+				<input type="password"
+				       class="password"
+				       data-validate="{{validate required=true}}"
+				       data-tabindex="3">
+			</div>
+		</div>
+		<div>
+			<label>{{local 'general.register.passwordrepeat.label'}}</label>
+
+			<div class="input">
+				<input type="text"
+				       class="passwordRepeat"
+				       data-validate="{{validate required=true}}"
+				       data-tabindex="4">
+			</div>
+		</div>
+
+		<div class="buttons">
+			<div></div>
+			<div class="btnBar equal">
+				<a class="submit btn positive"
+				   data-tabindex="3">{{local 'action.login'}}</a>
+			</div>
+		</div>
+	</form>
 </div>

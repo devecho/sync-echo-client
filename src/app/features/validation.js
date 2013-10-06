@@ -18,14 +18,17 @@ define([
 
 	/**
 	 * @method validate
-	 * @param input {HTMLInputElement}
+	 * @param input {HTMLElement}
 	 * @param visualize {boolean}
 	 * @return {boolean}
 	 * @private
 	 */
 	var validate = function(input, visualize) {
 		var $input = $(input);
-		var val = $input.val();
+		if(!$input.data('validate')) {
+			return true;
+		}
+		var val = $input.is('input') ? $input.val() : $input.data('value');
 		var options = _.defaults($input.data('validate'), defaultOptions);
 		var valid = true;
 
@@ -55,7 +58,7 @@ define([
 		return valid;
 	}
 
-	$(document).on('keydown keypress paste change', 'form input[data-validate]', function(e) {
+	$(document).on('keydown keypress paste change', 'form [data-validate]', function(e) {
 		window.setTimeout(function() {
 			var $form = $(e.currentTarget).closest('form');
 			$form.find('a.submit').toggleClass('ghosted', !$form.validate(false));
