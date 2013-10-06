@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/devecho/syn-cecho-client.png?branch=master)](https://travis-ci.org/devecho/sync-echo-client)
+[![Build Status](https://travis-ci.org/devecho/sync-echo-client.png?branch=master)](https://travis-ci.org/devecho/sync-echo-client)
 
 syncecho-client
 ===============
