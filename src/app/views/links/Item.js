@@ -4,15 +4,17 @@
  * @requires lib/handlebars
  * @requires models/Provider
  * @requires views/basic/ListItem
+ * @requires utils
  */
 define([
 	'backbone',
 	'lib/handlebars',
 	'models/Provider',
 	'views/basic/ListItem',
+	'utils',
 	'tpl!links/item',
 	'tpl!links/dataInput'
-], function(Backbone, Handlebars, Provider, ListItem, template, inputTemplate) {
+], function(Backbone, Handlebars, Provider, ListItem, utils, template, inputTemplate) {
 
 	/**
 	 * @class views.links.Item
@@ -174,6 +176,22 @@ define([
 		 */
 		delete: function(e) {
 			this.model.destroy();
+		},
+
+		/**
+		 * @method filter
+		 * @param str {string}
+		 * @public
+		 */
+		filter: function(str) {
+			if(this.model.isNew()) {
+				return;
+			}
+
+			this.$el.toggleClass('hidden', !utils.matchFilter(str, [
+				this.model.get('provider').name,
+				this.model.identifier()
+			]));
 		},
 
 		/**

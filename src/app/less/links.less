@@ -12,13 +12,10 @@
 			vertical-align: middle;
 		}
 
-		> .input {
-			padding-right: @paddingNormal;
-		}
-
 		> .new {
 			width: 1px;
 			white-space: nowrap;
+			padding-left: @paddingNormal;
 
 			> .popup {
 				background: #FFF;
@@ -56,6 +53,10 @@
 		.noListStyle();
 
 		> li {
+			&.hidden {
+				display: none;
+			}
+
 			> div {
 				.tableLayout();
 				height: auto;

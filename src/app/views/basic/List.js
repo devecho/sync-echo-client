@@ -237,6 +237,18 @@ define([
 			if(view !== null) {
 				view.el.scrollIntoView();
 			}
+		},
+
+		/**
+		 * @method filter
+		 * @param e {KeyboardEvent, string}
+		 * @public
+		 */
+		filter: function(e) {
+			var items = this.itemViews();
+			for(var i = 0; i < items.length; i++) {
+				items[i].filter((typeof e === 'string') ? e : $(e.currentTarget).val());
+			}
 		}
 	}, {
 		/**

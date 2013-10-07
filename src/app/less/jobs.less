@@ -11,13 +11,10 @@
 			vertical-align: middle;
 		}
 
-		> .input {
-			padding-right: @paddingNormal;
-		}
-
 		> .new {
 			width: 1px;
 			white-space: nowrap;
+			padding-left: @paddingNormal;
 		}
 	}
 
@@ -36,6 +33,10 @@
 
 			&:nth-child(2n + 1) {
 				padding-right: @paddingNormal;
+			}
+
+			&.hidden {
+				display: none;
 			}
 
 			> a {

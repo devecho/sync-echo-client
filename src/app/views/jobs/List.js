@@ -47,6 +47,8 @@ define([
 		 * @protected
 		 */
 		events: {
+			'keyup .filter input': 'filter',
+			'click .filter i.icon-cross': 'clearFilter'
 		},
 
 		/**
@@ -56,6 +58,15 @@ define([
 		 */
 		renderTemplate: function() {
 			this.$el.html(template());
+		},
+
+		/**
+		 * @method clearFilter
+		 * @public
+		 */
+		clearFilter: function() {
+			this.$el.find('.filter input').val('');
+			this.filter('');
 		}
 	}, {
 

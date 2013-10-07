@@ -99,10 +99,12 @@ a.btn, div.btnBar > a.btn {
 		}
 
 		> .input {
+			width: 100%;
+			padding-bottom: @paddingSmall;
+
 			input {
 				width: 100%;
 			}
-			padding-bottom: @paddingSmall;
 		}
 
 		> label {
@@ -115,6 +117,8 @@ a.btn, div.btnBar > a.btn {
 }
 
 .input {
+	position: relative;
+
 	> input {
 		width: 100%;
 		font-size: 1em;
@@ -132,6 +136,27 @@ a.btn, div.btnBar > a.btn {
 
 		&.invalid {
 			border-color: #F00;
+		}
+	}
+
+	&.hasIcons > input {
+		padding-left: 2.25em;
+		padding-right: 2.25em;
+	}
+
+	> i {
+		position: absolute;
+		top: 50%;
+		margin-top: -0.5em;
+		color: @iconColorLight;
+		.fittingFont(14pt);
+
+		&:first-child {
+			left: @paddingSmall;
+		}
+
+		&:last-child {
+			right: @paddingSmall;
 		}
 	}
 }

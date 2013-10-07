@@ -4,14 +4,16 @@
  * @requires lib/handlebars
  * @requires models/Provider
  * @requires views/basic/ListItem
+ * @requires utils
  */
 define([
 	'backbone',
 	'lib/handlebars',
 	'models/Job',
 	'views/basic/ListItem',
+	'utils',
 	'tpl!jobs/item'
-], function(Backbone, Handlebars, Job, ListItem, template, inputTemplate) {
+], function(Backbone, Handlebars, Job, ListItem, utils, template, inputTemplate) {
 
 	/**
 	 * @namespace views.jobs
@@ -73,6 +75,18 @@ define([
 					self.$el.removeClass('editing');
 				}
 			});
+		},
+
+		/**
+		 * @method filter
+		 * @param str {string}
+		 * @public
+		 */
+		filter: function(str) {
+			this.$el.toggleClass('hidden', !utils.matchFilter(str, [
+				this.model.get('name'),
+				this.model.get('description')
+			]));
 		}
 	});
 

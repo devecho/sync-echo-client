@@ -13,7 +13,7 @@ define([
 	 * @constructor
 	 */
 	var ListItemView = Backbone.View.extend({
-		tagName: 'li',
+		tagName:   'li',
 		className: '',
 
 		/**
@@ -35,6 +35,15 @@ define([
 			Backbone.View.prototype.render.call(this);
 			this.delegateEvents();
 			return this;
+		},
+
+		/**
+		 * @method filter
+		 * @param str {string}
+		 * @public
+		 */
+		filter: function(str) {
+
 		}
 	});
 

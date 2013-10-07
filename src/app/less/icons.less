@@ -4,23 +4,14 @@
 
 @font-face {
 	font-family: 'icomoon';
-	src:url('@{fontDirectory}icomoon.eot');
-	src:url('@{fontDirectory}icomoon.eot?#iefix') format('embedded-opentype'),
-	url('@{fontDirectory}icomoon.woff') format('woff'),
-	url('@{fontDirectory}icomoon.ttf') format('truetype'),
-	url('@{fontDirectory}icomoon.svg#icomoon') format('svg');
+	src: url('@{fontDirectory}icomoon.eot');
+	src: url('@{fontDirectory}icomoon.eot?#iefix') format('embedded-opentype'), url('@{fontDirectory}icomoon.woff') format('woff'), url('@{fontDirectory}icomoon.ttf') format('truetype'), url('@{fontDirectory}icomoon.svg#icomoon') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
 
 i.clickable {
-  cursor: pointer;
-  color: @iconColor;
-  padding: 0.5em;
-
-  &:hover, &:focus {
-	color: @iconColorLight;
-  }
+	.clickIcon();
 }
 
 i.bold {

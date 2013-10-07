@@ -49,7 +49,9 @@ define([
 		 * @protected
 		 */
 		events: {
-			'click ul.providers li': 'add'
+			'click ul.providers li':      'add',
+			'keyup .filter input':        'filter',
+			'click .filter i.icon-cross': 'clearFilter'
 		},
 
 		/**
@@ -85,6 +87,15 @@ define([
 					data: []
 				}
 			}));
+		},
+
+		/**
+		 * @method clearFilter
+		 * @public
+		 */
+		clearFilter: function() {
+			this.$el.find('.filter input').val('');
+			this.filter('');
 		}
 	}, {
 
