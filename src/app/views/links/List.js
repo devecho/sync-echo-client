@@ -41,7 +41,7 @@ define([
 		 * @default 'providerList'
 		 * @protected
 		 */
-		className: 'links',
+		className: 'linkList',
 
 		/**
 		 * @property events
