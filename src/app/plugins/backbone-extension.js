@@ -603,7 +603,7 @@ define([
 				return function(options) {
 					options = options || {};
 					options.dataType = options.dataType || 'text';
-					return destroy.apply(this, arguments);
+					return destroy.call(this, options);
 				}
 			})(),
 

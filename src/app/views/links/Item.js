@@ -126,6 +126,7 @@ define([
 		 */
 		edit: function(e) {
 			this.$el.addClass('editing');
+			this.$el.find('form').validate();
 			this.animateHeight();
 		},
 

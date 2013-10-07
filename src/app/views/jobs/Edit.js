@@ -132,7 +132,7 @@ define([
 			else {
 				$sourceEl.html(this._currentSource.get('provider').name + ' (' +
 				               this._currentSource.identifier() + ')');
-				$sourceEl.data('value', this._currentSource.id);
+				$sourceEl.attr('data-value', this._currentSource.id);
 			}
 		},
 
@@ -149,7 +149,7 @@ define([
 			else {
 				$targetEl.html(this._currentTarget.get('provider').name + ' (' +
 				               this._currentTarget.identifier() + ')');
-				$targetEl.data('value', this._currentTarget.id);
+				$targetEl.attr('data-value', this._currentTarget.id);
 			}
 		},
 
@@ -162,6 +162,7 @@ define([
 			this._currentSource = this._links.get(
 				$(e.currentTarget).data('linkId'));
 			this.renderSource();
+			this.$el.find('form').validate();
 		},
 
 		/**
@@ -173,7 +174,7 @@ define([
 			this._currentTarget = this._links.get(
 				$(e.currentTarget).data('linkId'));
 			this.renderTarget();
-			this
+			this.$el.find('form').validate();
 		},
 
 		/**

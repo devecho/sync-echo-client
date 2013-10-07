@@ -28,7 +28,7 @@ define([
 		if(!$input.data('validate')) {
 			return true;
 		}
-		var val = $input.is('input') ? $input.val() : $input.data('value');
+		var val = $input.is('input') ? $input.val() : ($input.data('value') || '');
 		var options = _.defaults($input.data('validate'), defaultOptions);
 		var valid = true;
 
@@ -52,16 +52,17 @@ define([
 	$.fn.validate = function(visualize) {
 		var $form = this.filter('form');
 		var valid = true;
-		$form.find('input').each(function() {
+		$form.find('[data-validate]').each(function() {
 			valid = valid && validate(this, visualize);
 		});
+		$form.find('a.submit').toggleClass('ghosted', !valid);
 		return valid;
 	}
 
 	$(document).on('keydown keypress paste change', 'form [data-validate]', function(e) {
 		window.setTimeout(function() {
 			var $form = $(e.currentTarget).closest('form');
-			$form.find('a.submit').toggleClass('ghosted', !$form.validate(false));
+			$form.validate();
 			validate(e.currentTarget, true);
 		}, 0);
 	});
